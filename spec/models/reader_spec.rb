@@ -57,6 +57,13 @@ RSpec.describe Reader, type: :model do
     end
   end
 
+  it "refuses to delete a reader with loans, so history keeps its reader" do
+    reader = create(:borrowing, :returned).reader
+
+    expect(reader.destroy).to be(false)
+    expect(reader.reload).to be_persisted
+  end
+
   it "squishes whitespace in the full name" do
     expect(build(:reader, full_name: " Ada   Lovelace ").full_name).to eq("Ada Lovelace")
   end

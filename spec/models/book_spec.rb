@@ -108,4 +108,77 @@ RSpec.describe Book, type: :model do
       expect { book.destroy! }.to change(BookAuthor, :count).by(-1).and change(Author, :count).by(0)
     end
   end
+
+  describe "borrowing associations" do
+    let(:book) { create(:book) }
+
+    it "lists loans newest first" do
+      older = create(:borrowing, :returned, book: book, borrowed_at: 20.days.ago, returned_at: 15.days.ago)
+      newer = create(:borrowing, :returned, book: book, borrowed_at: 10.days.ago, returned_at: 5.days.ago)
+
+      expect(book.reload.borrowings).to eq([ newer, older ])
+    end
+
+    it "exposes the open loan and its reader" do
+      create(:borrowing, :returned, book: book)
+      open_loan = create(:borrowing, book: book)
+
+      expect(book.reload.current_borrowing).to eq(open_loan)
+      expect(book.current_reader).to eq(open_loan.reader)
+    end
+
+    it "has no current loan or reader once everything is returned" do
+      create(:borrowing, :returned, book: book)
+
+      expect(book.reload.current_borrowing).to be_nil
+      expect(book.current_reader).to be_nil
+    end
+
+    it "preloads the current reader for a list" do
+      open_loan = create(:borrowing, book: book)
+
+      loaded = described_class.includes(:current_reader).find(book.id)
+
+      expect(loaded.current_reader).to eq(open_loan.reader)
+    end
+  end
+
+  describe "deleting" do
+    let(:book) { create(:book) }
+
+    context "with an open loan" do
+      let!(:loan) { create(:borrowing, book: book) }
+
+      it "refuses and says why" do
+        expect(book.destroy).to be(false)
+        expect(book.errors[:base]).to include("Cannot delete a book while it is borrowed")
+      end
+
+      it "tags the error so the API can pick a status code" do
+        book.destroy
+
+        expect(book.errors.of_kind?(:base, :currently_borrowed)).to be(true)
+      end
+
+      it "leaves the book, its loan and its authors untouched" do
+        expect { book.destroy }
+          .to not_change(described_class, :count)
+          .and not_change(Borrowing, :count)
+          .and not_change(BookAuthor, :count)
+      end
+    end
+
+    it "deletes an available book together with its returned loans" do
+      create(:borrowing, :returned, book: book)
+
+      expect { book.destroy! }.to change(described_class, :count).by(-1).and change(Borrowing, :count).by(-1)
+    end
+
+    it "can be deleted once the loan is returned" do
+      loan = create(:borrowing, book: book)
+      loan.update!(returned_at: Time.current)
+
+      expect(book.reload.destroy).to be_truthy
+    end
+  end
 end

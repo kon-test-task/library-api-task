@@ -3,6 +3,11 @@ class Book < ApplicationRecord
 
   has_many :book_authors, -> { order(:position) }, dependent: :destroy, inverse_of: :book
   has_many :authors, through: :book_authors
+  has_many :borrowings, -> { order(borrowed_at: :desc) }, dependent: :destroy, inverse_of: :book
+  has_one :current_borrowing, -> { active }, class_name: "Borrowing", inverse_of: :book
+  has_one :current_reader, through: :current_borrowing, source: :reader
+
+  before_destroy :refuse_while_borrowed, prepend: true
 
   normalizes :serial_number, with: ->(value) { value.strip }
 
@@ -28,6 +33,15 @@ class Book < ApplicationRecord
   end
 
   private
+
+  # The row lock makes a delete wait for a lend in progress, so it cannot miss the new loan.
+  def refuse_while_borrowed
+    lock!
+    return unless borrowings.active.exists?
+
+    errors.add(:base, :currently_borrowed, message: "Cannot delete a book while it is borrowed")
+    throw :abort
+  end
 
   def must_have_an_author
     errors.add(:authors, "must include at least one author") if author_names.empty?

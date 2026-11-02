@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_02_105004) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_02_115001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -43,6 +43,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_02_105004) do
     t.check_constraint "serial_number::text ~ '^[0-9]{6}$'::text", name: "books_serial_number_six_digits"
   end
 
+  create_table "borrowings", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "reader_id", null: false
+    t.datetime "borrowed_at", null: false
+    t.date "due_date", null: false
+    t.datetime "returned_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id", "borrowed_at"], name: "index_borrowings_on_book_id_and_borrowed_at", order: { borrowed_at: :desc }
+    t.index ["book_id"], name: "index_borrowings_on_book_id_active", unique: true, where: "(returned_at IS NULL)"
+    t.index ["due_date"], name: "index_borrowings_on_due_date_active", where: "(returned_at IS NULL)"
+    t.index ["reader_id"], name: "index_borrowings_on_reader_id"
+    t.check_constraint "returned_at IS NULL OR returned_at >= borrowed_at", name: "borrowings_returned_at_after_borrowed_at"
+  end
+
   create_table "readers", force: :cascade do |t|
     t.string "card_number", limit: 6, null: false
     t.string "full_name", null: false
@@ -56,4 +71,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_02_105004) do
 
   add_foreign_key "book_authors", "authors"
   add_foreign_key "book_authors", "books"
+  add_foreign_key "borrowings", "books"
+  add_foreign_key "borrowings", "readers"
 end
