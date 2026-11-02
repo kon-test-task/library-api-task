@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_02_115001) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_02_160000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -51,6 +51,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_02_115001) do
     t.datetime "returned_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "upcoming_reminder_sent_at"
+    t.datetime "due_reminder_sent_at"
     t.index ["book_id", "borrowed_at"], name: "index_borrowings_on_book_id_and_borrowed_at", order: { borrowed_at: :desc }
     t.index ["book_id"], name: "index_borrowings_on_book_id_active", unique: true, where: "(returned_at IS NULL)"
     t.index ["due_date"], name: "index_borrowings_on_due_date_active", where: "(returned_at IS NULL)"

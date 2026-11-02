@@ -1,0 +1,5 @@
+due_date_reminders:
+  cron: "0 8 * * * Europe/Warsaw"
+  class: "DueDateReminderJob"
+  queue: "default"
+  description: "Send daily reminder emails for open borrowings due in 3 days or due today"

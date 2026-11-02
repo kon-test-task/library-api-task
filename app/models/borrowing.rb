@@ -8,6 +8,12 @@ class Borrowing < ApplicationRecord
   scope :returned, -> { where.not(returned_at: nil) }
   scope :overdue, ->(date = Date.current) { active.where(due_date: ...date) }
   scope :due_on, ->(date) { active.where(due_date: date) }
+  scope :pending_upcoming_reminder, ->(date = Date.current) {
+    active.where(upcoming_reminder_sent_at: nil, due_date: (date + 1.day)..(date + 3.days))
+  }
+  scope :pending_due_reminder, ->(date = Date.current) {
+    active.where(due_reminder_sent_at: nil, due_date: ..date)
+  }
 
   before_validation :set_default_dates, on: :create
 

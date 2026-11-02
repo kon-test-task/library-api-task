@@ -1,0 +1,15 @@
+Hello <%= @reader.full_name %>,
+
+This is a reminder that the book below is due for return today:
+
+Title: <%= @book.title %>
+Author: <%= @book.author %>
+Serial number: <%= @book.serial_number %>
+Card number: <%= @reader.card_number %>
+Borrowed at: <%= @borrowing.borrowed_at.strftime("%Y-%m-%d") %>
+Due date: <%= @due_date.strftime("%Y-%m-%d") %>
+
+Please return it to the library today.
+
+Thank you,
+The Library Staff

@@ -31,7 +31,7 @@ RSpec.describe BorrowingBlueprint, type: :model do
     subject(:json) { JSON.parse(described_class.render(loan)) }
 
     it "writes timestamps as ISO 8601" do
-      expect(json["borrowed_at"]).to eq(Time.current.utc.iso8601(3))
+      expect(json["borrowed_at"]).to eq(Time.current.iso8601(3))
     end
 
     it "writes the due date as a plain date" do
@@ -42,7 +42,7 @@ RSpec.describe BorrowingBlueprint, type: :model do
       let(:loan) { create(:borrowing, :returned, reader: reader) }
 
       it "writes the return time as ISO 8601" do
-        expect(json["returned_at"]).to eq(loan.returned_at.utc.iso8601(3))
+        expect(json["returned_at"]).to eq(loan.returned_at.iso8601(3))
       end
     end
   end

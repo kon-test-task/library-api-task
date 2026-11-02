@@ -10,6 +10,8 @@ gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 # Background jobs backed by Redis
 gem "sidekiq", "~> 8.1"
+# Recurring cron jobs for Sidekiq
+gem "sidekiq-cron", "~> 2.4"
 # Catch unsafe migrations before they run
 gem "strong_migrations", "~> 2.8"
 # JSON views for the API
@@ -55,6 +57,11 @@ group :development, :test do
 
   # Detect N+1 queries and unused eager loading
   gem "bullet", "~> 8.3"
+end
+
+group :development do
+  # View delivered emails in the browser
+  gem "letter_opener_web", "~> 3.0"
 end
 
 group :test do

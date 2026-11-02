@@ -33,7 +33,9 @@ module LibraryApi
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    config.time_zone = "Warsaw"
+    config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.preview_paths << Rails.root.join("spec/mailers/previews")
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Only loads a smaller set of middleware suitable for API only apps.

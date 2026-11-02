@@ -111,4 +111,30 @@ RSpec.describe Borrowing, type: :model do
       expect(described_class.due_on(Date.new(2026, 3, 1))).to be_empty
     end
   end
+
+  describe "reminder scopes" do
+    let(:today) { Date.new(2026, 3, 10) }
+    let!(:due_in_3_days) { create(:borrowing, due_date: today + 3.days) }
+    let!(:due_in_2_days) { create(:borrowing, due_date: today + 2.days) }
+    let!(:due_in_4_days) { create(:borrowing, due_date: today + 4.days) }
+    let!(:due_today) { create(:borrowing, due_date: today) }
+    let!(:overdue_unsent) { create(:borrowing, due_date: today - 1.day) }
+    let!(:already_sent_upcoming) do
+      create(:borrowing, due_date: today + 3.days, upcoming_reminder_sent_at: Time.zone.local(2026, 3, 9))
+    end
+    let!(:already_sent_due) do
+      create(:borrowing, due_date: today, due_reminder_sent_at: Time.zone.local(2026, 3, 10))
+    end
+    let!(:returned_soon) do
+      create(:borrowing, :returned, due_date: today + 3.days)
+    end
+
+    it "finds unsent upcoming reminders due within 3 days without including due today" do
+      expect(described_class.pending_upcoming_reminder(today)).to contain_exactly(due_in_3_days, due_in_2_days)
+    end
+
+    it "finds unsent due reminders due today or overdue" do
+      expect(described_class.pending_due_reminder(today)).to contain_exactly(due_today, overdue_unsent)
+    end
+  end
 end
