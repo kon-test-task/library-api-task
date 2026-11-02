@@ -18,8 +18,8 @@ Rails.application.routes.draw do
   end
 
   if Rails.env.local?
-    mount Rswag::Ui::Engine, at: "/api-docs"
     mount Rswag::Api::Engine, at: "/api-docs"
+    mount Scalar::UI, at: "/docs"
   end
 
   if Rails.env.development?
