@@ -1,5 +1,5 @@
 # Records and response bodies behind the examples in swagger/v1/swagger.yaml.
-# db/seeds.rb uses the same serial and card numbers, so the examples work in Swagger UI.
+# db/seeds.rb uses the same serial and card numbers, so the examples work in the Scalar reference.
 module OpenapiExamples
   SIX_DIGITS = '^\d{6}$'
 
