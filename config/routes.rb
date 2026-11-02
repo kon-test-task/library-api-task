@@ -7,7 +7,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :books, param: :serial_number, only: %i[index show create destroy]
+      resources :books, param: :serial_number, only: %i[index show create destroy] do
+        patch :status, on: :member, to: "book_statuses#update"
+      end
     end
   end
 
