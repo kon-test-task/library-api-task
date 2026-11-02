@@ -80,7 +80,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/book_with_history"
         '400':
-          description: the body is not valid JSON
+          description: the request could not be read
           content:
             application/json:
               examples:
@@ -91,6 +91,13 @@ paths:
                       message: Request body is not valid JSON
                       field:
                   summary: A body that does not parse
+                bad_request:
+                  value:
+                    errors:
+                    - code: bad_request
+                      message: Request parameters could not be read
+                      field:
+                  summary: Bytes in the query string that are not valid UTF-8
               schema:
                 "$ref": "#/components/schemas/errors"
         '404':
@@ -161,6 +168,20 @@ paths:
                       message: status is required
                       field: status
                   summary: No status in the body
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '500':
+          description: an unexpected failure
+          content:
+            application/json:
+              examples:
+                internal_error:
+                  value:
+                    errors:
+                    - code: internal_error
+                      message: Something went wrong
+                      field:
+                  summary: The log keeps the cause, and the response hides it
               schema:
                 "$ref": "#/components/schemas/errors"
       requestBody:
@@ -311,6 +332,34 @@ paths:
                   summary: A negative limit
               schema:
                 "$ref": "#/components/schemas/errors"
+        '400':
+          description: the request could not be read
+          content:
+            application/json:
+              examples:
+                bad_request:
+                  value:
+                    errors:
+                    - code: bad_request
+                      message: Request parameters could not be read
+                      field:
+                  summary: Bytes in the query string that are not valid UTF-8
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '500':
+          description: an unexpected failure
+          content:
+            application/json:
+              examples:
+                internal_error:
+                  value:
+                    errors:
+                    - code: internal_error
+                      message: Something went wrong
+                      field:
+                  summary: The log keeps the cause, and the response hides it
+              schema:
+                "$ref": "#/components/schemas/errors"
     post:
       summary: Adds a book
       tags:
@@ -348,7 +397,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/book"
         '400':
-          description: the body is not valid JSON
+          description: the request could not be read
           content:
             application/json:
               examples:
@@ -359,6 +408,13 @@ paths:
                       message: Request body is not valid JSON
                       field:
                   summary: A body that does not parse
+                bad_request:
+                  value:
+                    errors:
+                    - code: bad_request
+                      message: Request parameters could not be read
+                      field:
+                  summary: Bytes in the query string that are not valid UTF-8
               schema:
                 "$ref": "#/components/schemas/errors"
         '422':
@@ -390,6 +446,20 @@ paths:
                       message: Send either author or authors, not both
                       field: authors
                   summary: Both author and authors in one request
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '500':
+          description: an unexpected failure
+          content:
+            application/json:
+              examples:
+                internal_error:
+                  value:
+                    errors:
+                    - code: internal_error
+                      message: Something went wrong
+                      field:
+                  summary: The log keeps the cause, and the response hides it
               schema:
                 "$ref": "#/components/schemas/errors"
       requestBody:
@@ -505,6 +575,34 @@ paths:
                   summary: A null byte in the serial number
               schema:
                 "$ref": "#/components/schemas/errors"
+        '400':
+          description: the request could not be read
+          content:
+            application/json:
+              examples:
+                bad_request:
+                  value:
+                    errors:
+                    - code: bad_request
+                      message: Request parameters could not be read
+                      field:
+                  summary: Bytes in the query string that are not valid UTF-8
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '500':
+          description: an unexpected failure
+          content:
+            application/json:
+              examples:
+                internal_error:
+                  value:
+                    errors:
+                    - code: internal_error
+                      message: Something went wrong
+                      field:
+                  summary: The log keeps the cause, and the response hides it
+              schema:
+                "$ref": "#/components/schemas/errors"
     delete:
       summary: Deletes a book and its returned loans
       tags:
@@ -560,6 +658,34 @@ paths:
                       message: Parameters must not contain null bytes
                       field:
                   summary: A null byte in the serial number
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '400':
+          description: the request could not be read
+          content:
+            application/json:
+              examples:
+                bad_request:
+                  value:
+                    errors:
+                    - code: bad_request
+                      message: Request parameters could not be read
+                      field:
+                  summary: Bytes in the query string that are not valid UTF-8
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '500':
+          description: an unexpected failure
+          content:
+            application/json:
+              examples:
+                internal_error:
+                  value:
+                    errors:
+                    - code: internal_error
+                      message: Something went wrong
+                      field:
+                  summary: The log keeps the cause, and the response hides it
               schema:
                 "$ref": "#/components/schemas/errors"
 components:

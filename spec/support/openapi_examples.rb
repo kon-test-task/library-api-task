@@ -58,6 +58,10 @@ module OpenapiExamples
 
   UNKNOWN_READER_ERROR = { code: "unknown_reader", message: "No reader has that card number", field: "card_number" }.freeze
 
+  BAD_REQUEST_ERROR = { code: "bad_request", message: "Request parameters could not be read" }.freeze
+
+  INTERNAL_ERROR = { code: "internal_error", message: "Something went wrong" }.freeze
+
   # Runs at spec load, so the dry run behind rswag:specs:swaggerize still writes the example.
   # The after hook runs with the spec and fails it when the real response differs from the example.
   module Macros
@@ -69,6 +73,31 @@ module OpenapiExamples
 
     def example_error(name, summary, code:, message:, field: nil)
       example_response name, summary, { errors: [ { code: code, message: message, field: field } ] }
+    end
+
+    # Any operation can return these two. The block sets up what triggers the response.
+    def bad_request_response(&setup)
+      response "400", "the request could not be read" do
+        schema "$ref" => "#/components/schemas/errors"
+
+        example_error :bad_request, "Bytes in the query string that are not valid UTF-8", **BAD_REQUEST_ERROR
+
+        class_exec(&setup)
+
+        run_test!
+      end
+    end
+
+    def internal_error_response(&setup)
+      response "500", "an unexpected failure" do
+        schema "$ref" => "#/components/schemas/errors"
+
+        example_error :internal_error, "The log keeps the cause, and the response hides it", **INTERNAL_ERROR
+
+        class_exec(&setup)
+
+        run_test!
+      end
     end
   end
 end

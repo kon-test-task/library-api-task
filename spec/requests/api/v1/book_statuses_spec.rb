@@ -57,7 +57,7 @@ RSpec.describe "Book status API", type: :request do
         run_test!
       end
 
-      response "400", "the body is not valid JSON" do
+      response "400", "the request could not be read" do
         schema "$ref" => "#/components/schemas/errors"
 
         example_error :invalid_json, "A body that does not parse",
@@ -143,6 +143,19 @@ RSpec.describe "Book status API", type: :request do
         let(:status_body) { { card_number: "100001" } }
 
         run_test!
+      end
+
+      bad_request_response do
+        # The template adds /status after this value, which lands in the unused x parameter.
+        let(:serial_number) { "000101/status?page=%E0&x=" }
+        let(:status_body) { { status: "available" } }
+      end
+
+      internal_error_response do
+        let(:serial_number) { "000101" }
+        let(:status_body) { { status: "available" } }
+
+        before { allow(Book).to receive(:find_by!).and_raise("boom") }
       end
     end
   end

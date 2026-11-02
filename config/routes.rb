@@ -24,4 +24,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  # Stays last, so a path no route above matches gets the API's error format.
+  match "*unmatched", to: "errors#route_not_found", via: :all, format: false
 end

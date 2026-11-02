@@ -60,6 +60,10 @@ RSpec.describe "Books API", type: :request do
 
         run_test!
       end
+
+      bad_request_response { let(:page) { "\xE0" } }
+
+      internal_error_response { before { allow(Book).to receive(:includes).and_raise("boom") } }
     end
 
     post "Adds a book" do
@@ -109,7 +113,7 @@ RSpec.describe "Books API", type: :request do
         run_test!
       end
 
-      response "400", "the body is not valid JSON" do
+      response "400", "the request could not be read" do
         schema "$ref" => "#/components/schemas/errors"
 
         example_error :invalid_json, "A body that does not parse",
@@ -156,6 +160,14 @@ RSpec.describe "Books API", type: :request do
 
         run_test!
       end
+
+      bad_request_response { let(:book_body) { double(to_json: %({"title":"\xE0"})) } }
+
+      internal_error_response do
+        let(:book_body) { OpenapiExamples::TWO_AUTHOR_REQUEST }
+
+        before { allow(Book).to receive(:new).and_raise("boom") }
+      end
     end
   end
 
@@ -194,6 +206,14 @@ RSpec.describe "Books API", type: :request do
         let(:serial_number) { "a%00b" }
 
         run_test!
+      end
+
+      bad_request_response { let(:serial_number) { "000101?page=%E0" } }
+
+      internal_error_response do
+        let(:serial_number) { "000101" }
+
+        before { allow(Book).to receive(:with_history).and_raise("boom") }
       end
     end
 
@@ -242,6 +262,14 @@ RSpec.describe "Books API", type: :request do
         let(:serial_number) { "a%00b" }
 
         run_test!
+      end
+
+      bad_request_response { let(:serial_number) { "000103?page=%E0" } }
+
+      internal_error_response do
+        let(:serial_number) { "000103" }
+
+        before { allow(Book).to receive(:find_by!).and_raise("boom") }
       end
     end
   end

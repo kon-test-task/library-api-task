@@ -106,8 +106,11 @@ RSpec.describe ApplicationController, type: :controller do
     expect(errors.first).to include("code" => "invalid_json", "field" => nil)
   end
 
-  it "does not swallow unexpected errors" do
-    expect { get :unexpected_failure }.to raise_error(RuntimeError, "boom")
+  it "renders an unexpected error as 500 without its message" do
+    get :unexpected_failure
+
+    expect(response).to have_http_status(:internal_server_error)
+    expect(errors).to eq([ { "code" => "internal_error", "message" => "Something went wrong", "field" => nil } ])
   end
 
   describe "null bytes" do

@@ -81,7 +81,10 @@ RSpec.configure do |config|
   }
 
   # rswag only checks its own specs. This holds every API response in the request specs to the committed OpenAPI file.
-  config.after(type: :request) do
+  # Tag a spec :undocumented for a response the file cannot describe, such as a path that has no route.
+  config.after(type: :request) do |example|
+    next if example.metadata[:undocumented]
+
     assert_response_schema_confirm(response.status) if request&.path&.start_with?('/api/v1')
   end
 

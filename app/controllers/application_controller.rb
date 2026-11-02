@@ -1,6 +1,16 @@
 class ApplicationController < ActionController::API
   before_action :refuse_null_bytes
 
+  # Rails checks handlers from the last one declared, so this catch-all stays first.
+  rescue_from StandardError do |error|
+    logger.error(([ "#{error.class}: #{error.message}" ] + Array(error.backtrace)).join("\n"))
+    render_error(:internal_server_error, code: "internal_error", message: "Something went wrong")
+  end
+
+  rescue_from ActionDispatch::Http::Parameters::ParseError do
+    render_error(:bad_request, code: "invalid_json", message: "Request body is not valid JSON")
+  end
+
   rescue_from ActiveRecord::RecordNotFound do |error|
     render_error(:not_found, code: "not_found", message: "#{error.model || "Record"} not found")
   end
@@ -23,11 +33,11 @@ class ApplicationController < ActionController::API
 
   private
 
-  # Rails parses the body before rescue_from applies, so this rescue sits outside that layer.
+  # Rails reads the query string in its instrumentation layer, before rescue_from applies, so this rescue sits outside that layer.
   def process_action(*)
     super
-  rescue ActionDispatch::Http::Parameters::ParseError
-    render_error(:bad_request, code: "invalid_json", message: "Request body is not valid JSON")
+  rescue ActionController::BadRequest
+    render_error(:bad_request, code: "bad_request", message: "Request parameters could not be read")
   end
 
   # The Postgres driver raises ArgumentError on a null byte in any string it sends.
