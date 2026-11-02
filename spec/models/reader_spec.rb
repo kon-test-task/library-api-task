@@ -65,6 +65,6 @@ RSpec.describe Reader, type: :model do
   end
 
   it "squishes whitespace in the full name" do
-    expect(build(:reader, full_name: " Ada   Lovelace ").full_name).to eq("Ada Lovelace")
+    expect(build(:reader, full_name: " Jan   Kowalski ").full_name).to eq("Jan Kowalski")
   end
 end

@@ -10,6 +10,8 @@ WORKDIR /rails
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
+COPY . .
+
 EXPOSE 3000
 
 # Called through their interpreters, because a Windows checkout can lose the executable bit.

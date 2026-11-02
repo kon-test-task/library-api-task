@@ -18,9 +18,15 @@ RSpec.describe "Books API", type: :request do
                }
 
         before do
-          create(:book, serial_number: "000101", title: "On the shelf")
-          borrowed = create(:book, serial_number: "000102", title: "Out on loan", status: :borrowed)
-          create(:borrowing, book: borrowed, reader: create(:reader, card_number: "100001", full_name: "Ada Lovelace"))
+          create(:book, serial_number: "000101", title: "Oryx and Crake", author_names: [ "Margaret Atwood" ])
+          borrowed = create(
+            :book,
+            serial_number: "000102",
+            title: "Letters to Daughters",
+            author_names: [ "Maria Skłodowska" ],
+            status: :borrowed
+          )
+          create(:borrowing, book: borrowed, reader: create(:reader, card_number: "100001", full_name: "Jan Kowalski"))
         end
 
         run_test! do |response|
@@ -30,7 +36,7 @@ RSpec.describe "Books API", type: :request do
           expect(body["meta"]).to include("count" => 2, "page" => 1, "limit" => 20, "last" => 1)
           expect(available).to include("serial_number" => "000101", "status" => "available", "borrowed" => false, "current_loan" => nil)
           expect(borrowed).to include("serial_number" => "000102", "status" => "borrowed", "borrowed" => true)
-          expect(borrowed.dig("current_loan", "reader")).to include("card_number" => "100001", "full_name" => "Ada Lovelace")
+          expect(borrowed.dig("current_loan", "reader")).to include("card_number" => "100001", "full_name" => "Jan Kowalski")
         end
       end
     end
