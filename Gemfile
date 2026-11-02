@@ -10,6 +10,8 @@ gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 # Background jobs backed by Redis
 gem "sidekiq", "~> 8.1"
+# Catch unsafe migrations before they run
+gem "strong_migrations", "~> 2.8"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
@@ -37,4 +39,21 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Test framework
+  gem "rspec-rails", "~> 8.0"
+
+  # Test data
+  gem "factory_bot_rails", "~> 6.5"
+
+  # Request specs that generate the OpenAPI file
+  gem "rswag-specs", "~> 2.17"
+
+  # Detect N+1 queries and unused eager loading
+  gem "bullet", "~> 8.3"
+end
+
+group :test do
+  # One-line model specs
+  gem "shoulda-matchers", "~> 8.0"
 end
