@@ -1,0 +1,7 @@
+/.git/
+/.github/
+/docs/
+/log/*
+/tmp/*
+/.env*
+/config/*.key
