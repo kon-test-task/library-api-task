@@ -12,6 +12,10 @@ gem "puma", ">= 5.0"
 gem "sidekiq", "~> 8.1"
 # Catch unsafe migrations before they run
 gem "strong_migrations", "~> 2.8"
+# JSON views for the API
+gem "blueprinter", "~> 1.2"
+# Offset pagination for the book list
+gem "pagy", "~> 43.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 

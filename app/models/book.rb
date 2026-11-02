@@ -9,6 +9,15 @@ class Book < ApplicationRecord
 
   before_destroy :refuse_while_borrowed, prepend: true
 
+  scope :by_author, ->(fragment) do
+    where(
+      BookAuthor.joins(:author)
+        .where("book_authors.book_id = books.id")
+        .where("authors.name ILIKE ?", "%#{sanitize_sql_like(fragment)}%")
+        .arel.exists
+    )
+  end
+
   normalizes :serial_number, with: ->(value) { value.strip }
 
   validates :serial_number, format: { with: /\A\d{6}\z/, message: "must be a 6-digit number" }, uniqueness: true
@@ -44,15 +53,18 @@ class Book < ApplicationRecord
   end
 
   def must_have_an_author
-    errors.add(:authors, "must include at least one author") if author_names.empty?
+    errors.add(:authors, :blank, message: "must include at least one author") if author_names.empty?
   end
 
   def save_author_names
     return unless @author_names
 
+    # Sorted inserts stop two requests creating the same new authors in opposite orders from deadlocking.
+    authors_by_name = @author_names.sort_by(&:downcase).to_h { |name| [ name, Author.find_or_create_by!(name: name) ] }
+
     book_authors.destroy_all
     @author_names.each.with_index(1) do |name, position|
-      book_authors.create!(author: Author.find_or_create_by!(name: name), position: position)
+      book_authors.create!(author: authors_by_name.fetch(name), position: position)
     end
 
     @author_names = nil
