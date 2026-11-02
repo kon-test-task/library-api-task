@@ -239,6 +239,22 @@ RSpec.describe "Books API behavior", type: :request do
   end
 
   describe "DELETE /api/v1/books/:serial_number" do
+    it "returns 409 for a borrowed book and keeps it" do
+      book = create(:book)
+      book.borrow!(create(:reader))
+
+      expect { delete "/api/v1/books/#{book.serial_number}" }.not_to change(Book, :count)
+      expect(response).to have_http_status(:conflict)
+      expect(body["errors"].first).to include("code" => "already_borrowed", "field" => nil)
+    end
+
+    it "returns 204 for an available book and removes it" do
+      book = create(:book)
+
+      expect { delete "/api/v1/books/#{book.serial_number}" }.to change(Book, :count).by(-1)
+      expect(response).to have_http_status(:no_content)
+    end
+
     it "deletes an available book's returned loans too" do
       loan = create(:borrowing, :returned)
 

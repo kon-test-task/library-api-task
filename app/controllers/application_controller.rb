@@ -13,6 +13,14 @@ class ApplicationController < ActionController::API
     render_record_errors(error.record)
   end
 
+  rescue_from ConflictError do |error|
+    render_error(:conflict, code: error.code, message: error.message, field: error.field)
+  end
+
+  rescue_from InvalidInputError do |error|
+    render_error(:unprocessable_content, code: error.code, message: error.message, field: error.field)
+  end
+
   private
 
   # Rails parses the body before rescue_from applies, so this rescue sits outside that layer.
@@ -33,11 +41,11 @@ class ApplicationController < ActionController::API
     render status: status, json: { errors: [ { code: code, message: message, field: field } ] }
   end
 
-  def render_record_errors(record, status: :unprocessable_content)
+  def render_record_errors(record)
     errors = record.errors.map do |error|
       { code: error.type.to_s, message: error.full_message, field: (error.attribute unless error.attribute == :base) }
     end
 
-    render status: status, json: { errors: errors }
+    render status: :unprocessable_content, json: { errors: errors }
   end
 end

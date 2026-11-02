@@ -19,6 +19,21 @@ RSpec.describe ApplicationController, type: :controller do
       raise ActiveRecord::RecordNotFound
     end
 
+    def state_conflict
+      raise Class.new(ConflictError) {
+        def self.name = "Shelf::AlreadyFull"
+        def message = "Shelf is full"
+      }
+    end
+
+    def bad_input
+      raise Class.new(InvalidInputError) {
+        def self.name = "Shelf::UnknownLabel"
+        def message = "No such label"
+        def field = :label
+      }
+    end
+
     def unparsable_body
       raise ActionDispatch::Http::Parameters::ParseError, "bad body"
     end
@@ -34,7 +49,7 @@ RSpec.describe ApplicationController, type: :controller do
 
   before do
     routes.draw do
-      %w[missing_param invalid_record missing_record missing_record_without_model unparsable_body unexpected_failure fine].each do |action|
+      %w[missing_param invalid_record missing_record missing_record_without_model state_conflict bad_input unparsable_body unexpected_failure fine].each do |action|
         get action => "anonymous##{action}"
       end
     end
@@ -68,6 +83,20 @@ RSpec.describe ApplicationController, type: :controller do
     get :missing_record_without_model
 
     expect(errors.first["message"]).to eq("Record not found")
+  end
+
+  it "renders any ConflictError as 409, with the code from its class name" do
+    get :state_conflict
+
+    expect(response).to have_http_status(:conflict)
+    expect(errors).to eq([ { "code" => "already_full", "message" => "Shelf is full", "field" => nil } ])
+  end
+
+  it "renders any InvalidInputError as 422, with its code and field" do
+    get :bad_input
+
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(errors).to eq([ { "code" => "unknown_label", "message" => "No such label", "field" => "label" } ])
   end
 
   it "renders an unparsable body as 400" do

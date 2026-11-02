@@ -143,7 +143,166 @@ RSpec.describe Book, type: :model do
     end
   end
 
-  describe "deleting" do
+  describe "#borrow!" do
+    let(:book) { create(:book) }
+    let(:reader) { create(:reader) }
+
+    it "opens a loan due 30 days after the borrow date and marks the book borrowed" do
+      travel_to Time.zone.local(2026, 3, 10, 14, 30) do
+        book.borrow!(reader)
+
+        expect(book.reload).to be_borrowed
+        expect(book.current_borrowing).to have_attributes(
+          reader: reader,
+          borrowed_at: Time.zone.local(2026, 3, 10, 14, 30),
+          due_date: Date.new(2026, 4, 9),
+          returned_at: nil
+        )
+      end
+    end
+
+    it "refuses a book that is already borrowed" do
+      book.borrow!(reader)
+
+      expect { book.borrow!(create(:reader)) }.to raise_error(Books::AlreadyBorrowed) do |error|
+        expect(error.code).to eq("already_borrowed")
+      end
+      expect(book.borrowings.count).to eq(1)
+    end
+
+    it "treats an open loan as borrowed even if the status says available" do
+      create(:borrowing, book: book)
+
+      expect { book.borrow!(reader) }.to raise_error(Books::AlreadyBorrowed)
+    end
+
+    it "lends a book marked borrowed that has no open loan, which repairs it" do
+      book.borrowed!
+
+      book.borrow!(reader)
+
+      expect(book.reload).to be_borrowed
+      expect(book.current_reader).to eq(reader)
+    end
+
+    # The validator stub is needed too. Without it the loan validation raises RecordInvalid before the index fires.
+    it "rescues RecordNotUnique from the partial index" do
+      create(:borrowing, book: book)
+      allow(book).to receive(:current_borrowing).and_return(nil)
+      allow_any_instance_of(ActiveRecord::Validations::UniquenessValidator).to receive(:validate_each)
+
+      expect { book.borrow!(reader) }.to raise_error(Books::AlreadyBorrowed) do |error|
+        expect(error.cause).to be_a(ActiveRecord::RecordNotUnique)
+      end
+      expect(Borrowing.active.where(book: book).count).to eq(1)
+    end
+
+    it "does not turn other validation failures into a conflict" do
+      allow(book).to receive(:must_have_an_author) { book.errors.add(:authors, :blank) }
+
+      expect { book.borrow!(reader) }.to raise_error(ActiveRecord::RecordInvalid)
+      expect(Borrowing.count).to eq(0)
+    end
+
+    it "rolls back the loan if the status cannot be saved" do
+      allow(book).to receive(:borrowed!).and_raise(ActiveRecord::RecordInvalid.new(book))
+
+      expect { book.borrow!(reader) }.to raise_error(ActiveRecord::RecordInvalid)
+      expect(Borrowing.count).to eq(0)
+    end
+  end
+
+  describe "#give_back!" do
+    let(:book) { create(:book) }
+    let(:reader) { create(:reader) }
+
+    context "with an open loan" do
+      before { book.borrow!(reader) }
+
+      it "closes the loan and marks the book available" do
+        travel_to 3.days.from_now do
+          book.give_back!
+
+          expect(book.reload).to be_available
+          expect(book.borrowings.first.returned_at).to eq(Time.current)
+          expect(book.current_borrowing).to be_nil
+        end
+      end
+
+      it "lets the book be borrowed again and keeps the history" do
+        book.give_back!
+        book.borrow!(reader)
+
+        expect(book.reload).to be_borrowed
+        expect(book.borrowings.count).to eq(2)
+      end
+
+      it "closes the loan even if the status says available, which repairs it" do
+        book.available!
+
+        book.give_back!
+
+        expect(book.reload.current_borrowing).to be_nil
+      end
+    end
+
+    it "refuses a book with no open loan" do
+      expect { book.give_back! }.to raise_error(Books::AlreadyAvailable) do |error|
+        expect(error.code).to eq("already_available")
+      end
+    end
+
+    it "rolls back the return if the status cannot be saved" do
+      book.borrow!(reader)
+      allow(book).to receive(:available!).and_raise(ActiveRecord::RecordInvalid.new(book))
+
+      expect { book.give_back! }.to raise_error(ActiveRecord::RecordInvalid)
+      expect(Borrowing.active.where(book: book).count).to eq(1)
+    end
+  end
+
+  describe "#remove!" do
+    let(:book) { create(:book) }
+
+    it "refuses a book with an open loan and leaves everything in place" do
+      create(:borrowing, book: book)
+
+      expect { expect { book.remove! }.to raise_error(Books::AlreadyBorrowed) }
+        .to not_change(described_class, :count)
+        .and not_change(Borrowing, :count)
+        .and not_change(BookAuthor, :count)
+    end
+
+    it "treats an open loan as borrowed even if the status says available" do
+      create(:borrowing, book: book)
+
+      expect(book).to be_available
+      expect { book.remove! }.to raise_error(Books::AlreadyBorrowed)
+    end
+
+    it "removes a book marked borrowed that has no open loan" do
+      book.borrowed!
+
+      book.remove!
+
+      expect(described_class.exists?(book.id)).to be(false)
+    end
+
+    it "removes an available book together with its returned loans" do
+      create(:borrowing, :returned, book: book)
+
+      expect { book.remove! }.to change(described_class, :count).by(-1).and change(Borrowing, :count).by(-1)
+    end
+
+    it "sees a loan opened after the book was loaded, because the lock reloads" do
+      book.current_borrowing
+      create(:borrowing, book_id: book.id)
+
+      expect { book.remove! }.to raise_error(Books::AlreadyBorrowed)
+    end
+  end
+
+  describe "deleting directly" do
     let(:book) { create(:book) }
 
     context "with an open loan" do
@@ -152,12 +311,6 @@ RSpec.describe Book, type: :model do
       it "refuses and says why" do
         expect(book.destroy).to be(false)
         expect(book.errors[:base]).to include("Cannot delete a book while it is borrowed")
-      end
-
-      it "tags the error so the API can pick a status code" do
-        book.destroy
-
-        expect(book.errors.of_kind?(:base, :currently_borrowed)).to be(true)
       end
 
       it "leaves the book, its loan and its authors untouched" do

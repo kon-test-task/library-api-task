@@ -9,6 +9,7 @@ class Book < ApplicationRecord
 
   before_destroy :refuse_while_borrowed, prepend: true
 
+  scope :with_history, -> { includes(:authors, current_borrowing: :reader, borrowings: :reader) }
   scope :by_author, ->(fragment) do
     where(
       BookAuthor.joins(:author)
@@ -41,14 +42,45 @@ class Book < ApplicationRecord
     author_names.join(", ")
   end
 
+  # with_lock opens a transaction and reloads the book with SELECT ... FOR UPDATE,
+  # so lend, return and remove on the same book run one at a time.
+  # Each decides from the open loan, which the partial unique index keeps to at most one.
+  def borrow!(reader)
+    with_lock do
+      raise Books::AlreadyBorrowed if current_borrowing
+
+      borrowings.create!(reader: reader)
+      borrowed!
+    end
+  rescue ActiveRecord::RecordNotUnique
+    raise Books::AlreadyBorrowed
+  end
+
+  def give_back!
+    with_lock do
+      loan = current_borrowing
+      raise Books::AlreadyAvailable unless loan
+
+      loan.update!(returned_at: Time.current)
+      available!
+    end
+  end
+
+  def remove!
+    with_lock do
+      raise Books::AlreadyBorrowed if current_borrowing
+
+      destroy!
+    end
+  end
+
   private
 
-  # The row lock makes a delete wait for a lend in progress, so it cannot miss the new loan.
+  # Stops a direct destroy from a console or seed. Book#remove! is the path that takes the row lock.
   def refuse_while_borrowed
-    lock!
-    return unless borrowings.active.exists?
+    return unless current_borrowing
 
-    errors.add(:base, :currently_borrowed, message: "Cannot delete a book while it is borrowed")
+    errors.add(:base, "Cannot delete a book while it is borrowed")
     throw :abort
   end
 

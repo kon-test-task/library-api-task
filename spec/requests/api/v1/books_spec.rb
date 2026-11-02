@@ -146,7 +146,7 @@ RSpec.describe "Books API", type: :request do
 
         run_test! do |response|
           expect(JSON.parse(response.body)["errors"].first).to eq(
-            "code" => "currently_borrowed", "message" => "Cannot delete a book while it is borrowed", "field" => nil
+            "code" => "already_borrowed", "message" => "Book is already borrowed", "field" => nil
           )
           expect(Book.exists?(serial_number: serial_number)).to be(true)
         end

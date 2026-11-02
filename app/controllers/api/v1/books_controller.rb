@@ -21,8 +21,7 @@ module Api
       end
 
       def show
-        book = Book.includes(:authors, current_borrowing: :reader, borrowings: :reader)
-          .find_by!(serial_number: params[:serial_number])
+        book = Book.with_history.find_by!(serial_number: params[:serial_number])
 
         render json: BookBlueprint.render(book, view: :history)
       end
@@ -40,13 +39,9 @@ module Api
       end
 
       def destroy
-        book = Book.find_by!(serial_number: params[:serial_number])
+        Book.find_by!(serial_number: params[:serial_number]).remove!
 
-        if book.destroy
-          head :no_content
-        else
-          render_record_errors(book, status: :conflict)
-        end
+        head :no_content
       end
 
       private
