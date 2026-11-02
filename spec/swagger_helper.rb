@@ -67,6 +67,35 @@ RSpec.configure do |config|
             required: book_properties.keys.map(&:to_s) + %w[loans],
             properties: book_properties.merge(loans: { type: :array, items: { '$ref' => '#/components/schemas/loan' } })
           },
+          reader_loans: {
+            type: :object,
+            required: %w[reader loans meta],
+            properties: {
+              reader: { '$ref' => '#/components/schemas/reader' },
+              loans: {
+                type: :array,
+                items: {
+                  type: :object,
+                  required: %w[borrowed_at due_date returned_at book],
+                  properties: {
+                    borrowed_at: { type: :string, format: 'date-time', example: OpenapiExamples::RETURNED_LOAN[:borrowed_at] },
+                    due_date: { type: :string, format: :date, description: '30 days after the borrow date', example: OpenapiExamples::RETURNED_LOAN[:due_date] },
+                    returned_at: { type: :string, format: 'date-time', nullable: true, description: 'Null while the loan is open', example: OpenapiExamples::RETURNED_LOAN[:returned_at] },
+                    book: {
+                      type: :object,
+                      required: %w[serial_number title author],
+                      properties: {
+                        serial_number: { type: :string, pattern: OpenapiExamples::SIX_DIGITS, example: OpenapiExamples::AVAILABLE_BOOK[:serial_number] },
+                        title: { type: :string, example: OpenapiExamples::AVAILABLE_BOOK[:title] },
+                        author: { type: :string, description: 'All authors joined with a comma', example: OpenapiExamples::AVAILABLE_BOOK[:author] }
+                      }
+                    }
+                  }
+                }
+              },
+              meta: { '$ref' => '#/components/schemas/pagination' }
+            }
+          },
           pagination: {
             type: :object,
             required: %w[count page limit last],

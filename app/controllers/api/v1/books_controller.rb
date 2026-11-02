@@ -1,24 +1,17 @@
 module Api
   module V1
     class BooksController < ApplicationController
-      include Pagy::Method
-
-      MAX_LIMIT = 100
-      PAGINATION_KEYS = %i[count page limit last previous next].freeze
+      include Paginated
 
       before_action :refuse_both_author_fields, only: :create
-
-      rescue_from Pagy::OptionError do |error|
-        render_error(:unprocessable_content, code: "invalid_pagination", message: "#{error.option} must be at least 1", field: error.option)
-      end
 
       def index
         books = Book.includes(:authors, current_borrowing: :reader).order(:serial_number)
         books = books.by_author(params[:author].to_s) if params[:author].present?
         books = books.by_title(params[:title].to_s) if params[:title].present?
-        pagination, records = pagy(books, client_limit: MAX_LIMIT)
+        records, meta = paginate(books)
 
-        render json: BookBlueprint.render(records, view: :list, root: :books, meta: pagination.data_hash(data_keys: PAGINATION_KEYS))
+        render json: BookBlueprint.render(records, view: :list, root: :books, meta: meta)
       end
 
       def show

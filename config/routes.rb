@@ -10,6 +10,10 @@ Rails.application.routes.draw do
       resources :books, param: :serial_number, only: %i[index show create destroy] do
         patch :status, on: :member, to: "book_statuses#update"
       end
+
+      resources :readers, param: :card_number, only: [] do
+        resources :books, only: :index, controller: "reader_books"
+      end
     end
   end
 

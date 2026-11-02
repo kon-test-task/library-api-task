@@ -12,6 +12,30 @@ RSpec.describe Api::V1::BooksController, type: :controller do
 
       expect(body["books"].map { |book| book["serial_number"] }).to eq(%w[000001 000002])
     end
+
+    it "filters by title and by author together" do
+      create(:book, serial_number: "000001", title: "The Hobbit", author_names: [ "J.R.R. Tolkien" ])
+      create(:book, serial_number: "000002", title: "The Hobbit Companion", author_names: [ "Someone Else" ])
+      create(:book, serial_number: "000003", title: "The Silmarillion", author_names: [ "J.R.R. Tolkien" ])
+
+      get :index, params: { title: "hobbit", author: "tolkien" }
+
+      expect(body["books"].map { |book| book["serial_number"] }).to eq(%w[000001])
+    end
+
+    it "renders the shared pagination metadata" do
+      create(:book)
+
+      get :index, params: { limit: 1 }
+      expect(body["meta"]).to eq("count" => 1, "page" => 1, "limit" => 1, "last" => 1)
+    end
+
+    it "renders a negative limit as 422" do
+      get :index, params: { limit: -5 }
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(body["errors"].first["code"]).to eq("invalid_pagination")
+    end
   end
 
   describe "POST #create" do

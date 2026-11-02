@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Calls the five operations against the seeded app and prints each status code.
+# Calls every operation against the seeded app and prints each status code.
 # It removes the book it adds and returns the book it lends, so it can run again.
 #
 #   bin/smoke
@@ -35,6 +35,9 @@ check 200 PATCH "/api/v1/books/000101/status" '{"status":"borrowed","card_number
 check 200 PATCH "/api/v1/books/000101/status" '{"status":"available"}'
 check 204 DELETE "/api/v1/books/004219"
 check 409 DELETE "/api/v1/books/000102"
+check 200 GET "/api/v1/readers/100001/books"
+check 200 GET "/api/v1/readers/100002/books?include_returned=true"
+check 404 GET "/api/v1/readers/999999/books"
 
 if [ "$failures" -gt 0 ]; then
   echo "$failures failed"

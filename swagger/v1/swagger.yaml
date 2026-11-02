@@ -736,6 +736,143 @@ paths:
                   summary: The log keeps the cause, and the response hides it
               schema:
                 "$ref": "#/components/schemas/errors"
+  "/api/v1/readers/{card_number}/books":
+    get:
+      summary: Lists the books a reader has on loan
+      tags:
+      - Readers
+      parameters:
+      - name: card_number
+        in: path
+        description: Six-digit library card number
+        example: '100001'
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number, starting at 1
+        example: 1
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Loans per page, 20 by default, 100 at most
+        example: 20
+        schema:
+          type: integer
+      - name: include_returned
+        in: query
+        required: false
+        description: Send true to add returned loans, for the reader's full history
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: loans listed
+          content:
+            application/json:
+              examples:
+                on_loan:
+                  value:
+                    reader:
+                      card_number: '100001'
+                      full_name: Jan Kowalski
+                      email: jan.kowalski@example.com
+                    loans:
+                    - borrowed_at: '2026-10-20T10:00:00.000+02:00'
+                      due_date: '2026-11-19'
+                      returned_at:
+                      book:
+                        serial_number: '000102'
+                        title: Good Omens
+                        author: Terry Pratchett, Neil Gaiman
+                    meta:
+                      count: 1
+                      page: 1
+                      limit: 20
+                      last: 1
+                  summary: The books on loan to card 100001
+                with_returned:
+                  value:
+                    reader:
+                      card_number: '100002'
+                      full_name: Anna Nowak
+                      email: anna.nowak@example.com
+                    loans:
+                    - borrowed_at: '2026-09-01T10:00:00.000+02:00'
+                      due_date: '2026-10-01'
+                      returned_at: '2026-09-20T15:30:00.000+02:00'
+                      book:
+                        serial_number: '000101'
+                        title: Oryx and Crake
+                        author: Margaret Atwood
+                    meta:
+                      count: 1
+                      page: 1
+                      limit: 20
+                      last: 1
+                  summary: The full history of card 100002, with include_returned=true
+              schema:
+                "$ref": "#/components/schemas/reader_loans"
+        '404':
+          description: no reader with that card number
+          content:
+            application/json:
+              examples:
+                not_found:
+                  value:
+                    errors:
+                    - code: not_found
+                      message: Reader not found
+                      field:
+                  summary: An unknown card number
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '422':
+          description: invalid pagination
+          content:
+            application/json:
+              examples:
+                invalid_pagination:
+                  value:
+                    errors:
+                    - code: invalid_pagination
+                      message: limit must be at least 1
+                      field: limit
+                  summary: A negative limit
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '400':
+          description: the request could not be read
+          content:
+            application/json:
+              examples:
+                bad_request:
+                  value:
+                    errors:
+                    - code: bad_request
+                      message: Request parameters could not be read
+                      field:
+                  summary: Bytes in the query string that are not valid UTF-8
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '500':
+          description: an unexpected failure
+          content:
+            application/json:
+              examples:
+                internal_error:
+                  value:
+                    errors:
+                    - code: internal_error
+                      message: Something went wrong
+                      field:
+                  summary: The log keeps the cause, and the response hides it
+              schema:
+                "$ref": "#/components/schemas/errors"
 components:
   schemas:
     reader:
@@ -919,6 +1056,60 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/loan"
+    reader_loans:
+      type: object
+      required:
+      - reader
+      - loans
+      - meta
+      properties:
+        reader:
+          "$ref": "#/components/schemas/reader"
+        loans:
+          type: array
+          items:
+            type: object
+            required:
+            - borrowed_at
+            - due_date
+            - returned_at
+            - book
+            properties:
+              borrowed_at:
+                type: string
+                format: date-time
+                example: '2026-09-01T10:00:00.000+02:00'
+              due_date:
+                type: string
+                format: date
+                description: 30 days after the borrow date
+                example: '2026-10-01'
+              returned_at:
+                type: string
+                format: date-time
+                nullable: true
+                description: Null while the loan is open
+                example: '2026-09-20T15:30:00.000+02:00'
+              book:
+                type: object
+                required:
+                - serial_number
+                - title
+                - author
+                properties:
+                  serial_number:
+                    type: string
+                    pattern: "^\\d{6}$"
+                    example: '000101'
+                  title:
+                    type: string
+                    example: Oryx and Crake
+                  author:
+                    type: string
+                    description: All authors joined with a comma
+                    example: Margaret Atwood
+        meta:
+          "$ref": "#/components/schemas/pagination"
     pagination:
       type: object
       required:
