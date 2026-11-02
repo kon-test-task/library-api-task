@@ -72,6 +72,18 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
   config.include ActiveSupport::Testing::TimeHelpers
+  config.include Committee::Rails::Test::Methods, type: :request
+
+  config.add_setting :committee_options
+  config.committee_options = {
+    schema_path: Rails.root.join('swagger/v1/swagger.yaml').to_s,
+    strict_reference_validation: true
+  }
+
+  # rswag only checks its own specs. This holds every API response in the request specs to the committed OpenAPI file.
+  config.after(type: :request) do
+    assert_response_schema_confirm(response.status) if request&.path&.start_with?('/api/v1')
+  end
 
   # Bullet's Rack middleware only covers requests. These hooks also cover model, service and job specs.
   config.before { Bullet.start_request }

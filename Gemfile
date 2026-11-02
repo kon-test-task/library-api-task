@@ -74,4 +74,7 @@ end
 group :test do
   # One-line model specs
   gem "shoulda-matchers", "~> 8.0"
+
+  # Check request spec responses against the committed OpenAPI file
+  gem "committee-rails", "~> 0.10"
 end
