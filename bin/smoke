@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Calls every operation against the seeded app and prints each status code.
-# It removes the book it adds and returns the book it lends, so it can run again.
+# It lends a book it adds itself and then deletes it, so it can run again and leaves the seeded books alone.
 #
 #   bin/smoke
 #   BASE_URL=http://localhost:3000 bin/smoke
@@ -31,8 +31,8 @@ check() {
 check 200 GET "/api/v1/books"
 check 201 POST "/api/v1/books" '{"serial_number":"004219","title":"The Pragmatic Programmer","authors":["Andrew Hunt","David Thomas"]}'
 check 200 GET "/api/v1/books/000101"
-check 200 PATCH "/api/v1/books/000101/status" '{"status":"borrowed","card_number":"100001"}'
-check 200 PATCH "/api/v1/books/000101/status" '{"status":"available"}'
+check 200 PATCH "/api/v1/books/004219/status" '{"status":"borrowed","card_number":"100001"}'
+check 200 PATCH "/api/v1/books/004219/status" '{"status":"available"}'
 check 204 DELETE "/api/v1/books/004219"
 check 409 DELETE "/api/v1/books/000102"
 check 200 GET "/api/v1/readers/100001/books"

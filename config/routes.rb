@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   end
 
   if Rails.env.local?
+    get "api-docs", to: redirect("/docs")
     mount Rswag::Api::Engine, at: "/api-docs"
     mount Scalar::UI, at: "/docs"
   end
