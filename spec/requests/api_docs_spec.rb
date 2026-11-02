@@ -15,6 +15,12 @@ RSpec.describe "API docs", type: :request do
     expect(response.body).to include('"showDeveloperTools":"never"', '"agent":{"disabled":true}')
   end
 
+  it "redirects /api-docs to the Scalar reference" do
+    get "/api-docs"
+
+    expect(response).to redirect_to("/docs")
+  end
+
   it "serves the OpenAPI file with every operation" do
     get "/api-docs/v1/swagger.yaml"
 
