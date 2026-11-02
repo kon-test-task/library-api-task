@@ -240,6 +240,12 @@ paths:
         description: Case-insensitive fragment of an author's name
         schema:
           type: string
+      - name: title
+        in: query
+        required: false
+        description: Case-insensitive fragment of the title. Combines with author
+        schema:
+          type: string
       responses:
         '200':
           description: books listed
@@ -306,6 +312,48 @@ paths:
                       previous: 1
                       next: 3
                   summary: Page 2 of 3, with previous and next
+                by_author:
+                  value:
+                    books:
+                    - serial_number: '000101'
+                      title: Oryx and Crake
+                      status: available
+                      author: Margaret Atwood
+                      authors:
+                      - Margaret Atwood
+                      borrowed: false
+                      current_loan:
+                    meta:
+                      count: 1
+                      page: 1
+                      limit: 20
+                      last: 1
+                  summary: Search with author=atwood
+                by_title:
+                  value:
+                    books:
+                    - serial_number: '000102'
+                      title: Good Omens
+                      status: borrowed
+                      author: Terry Pratchett, Neil Gaiman
+                      authors:
+                      - Terry Pratchett
+                      - Neil Gaiman
+                      borrowed: true
+                      current_loan:
+                        borrowed_at: '2026-10-20T10:00:00.000+02:00'
+                        due_date: '2026-11-19'
+                        returned_at:
+                        reader:
+                          card_number: '100001'
+                          full_name: Jan Kowalski
+                          email: jan.kowalski@example.com
+                    meta:
+                      count: 1
+                      page: 1
+                      limit: 20
+                      last: 1
+                  summary: Search with title=omens
               schema:
                 type: object
                 required:

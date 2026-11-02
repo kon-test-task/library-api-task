@@ -15,6 +15,7 @@ module Api
       def index
         books = Book.includes(:authors, current_borrowing: :reader).order(:serial_number)
         books = books.by_author(params[:author].to_s) if params[:author].present?
+        books = books.by_title(params[:title].to_s) if params[:title].present?
         pagination, records = pagy(books, client_limit: MAX_LIMIT)
 
         render json: BookBlueprint.render(records, view: :list, root: :books, meta: pagination.data_hash(data_keys: PAGINATION_KEYS))

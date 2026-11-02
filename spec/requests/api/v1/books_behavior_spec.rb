@@ -18,6 +18,62 @@ RSpec.describe "Books API behavior", type: :request do
       expect(body["books"].size).to eq(3)
     end
 
+    describe "title search" do
+      before do
+        create(:book, serial_number: "000001", title: "The Hobbit", author_names: [ "J.R.R. Tolkien" ])
+        create(:book, serial_number: "000002", title: "The Silmarillion", author_names: [ "J.R.R. Tolkien" ])
+        create(:book, serial_number: "000003", title: "100% Wolf", author_names: [ "Jayne Lyons" ])
+      end
+
+      it "finds a title fragment in any case" do
+        get "/api/v1/books", params: { title: "hOBB" }
+
+        expect(serials).to eq([ "000001" ])
+      end
+
+      it "matches a literal percent sign only" do
+        get "/api/v1/books", params: { title: "%" }
+
+        expect(serials).to eq([ "000003" ])
+      end
+
+      it "treats an underscore as a literal character" do
+        get "/api/v1/books", params: { title: "_" }
+
+        expect(serials).to be_empty
+      end
+
+      it "combines with the author search" do
+        get "/api/v1/books", params: { title: "the", author: "tolkien" }
+
+        expect(serials).to eq([ "000001", "000002" ])
+      end
+
+      it "returns nothing when the title and author match different books" do
+        get "/api/v1/books", params: { title: "wolf", author: "tolkien" }
+
+        expect(serials).to be_empty
+      end
+
+      it "counts only the matches in the metadata" do
+        get "/api/v1/books", params: { title: "the" }
+
+        expect(body["meta"]["count"]).to eq(2)
+      end
+
+      it "ignores a blank search" do
+        get "/api/v1/books", params: { title: "" }
+
+        expect(serials.size).to eq(3)
+      end
+
+      it "does not fail on a nested param" do
+        get "/api/v1/books", params: { title: { a: "b" } }
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
     describe "author search" do
       before do
         create(:book, serial_number: "000001", author_names: [ "J.R.R. Tolkien" ])

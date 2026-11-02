@@ -18,6 +18,7 @@ class Book < ApplicationRecord
         .arel.exists
     )
   end
+  scope :by_title, ->(fragment) { where("books.title ILIKE ?", "%#{sanitize_sql_like(fragment)}%") }
 
   normalizes :serial_number, with: ->(value) { value.strip }
 

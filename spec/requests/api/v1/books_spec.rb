@@ -10,6 +10,7 @@ RSpec.describe "Books API", type: :request do
       parameter name: :page, in: :query, type: :integer, required: false, description: "Page number, starting at 1", example: 1
       parameter name: :limit, in: :query, type: :integer, required: false, description: "Books per page, 20 by default, 100 at most", example: 20
       parameter name: :author, in: :query, type: :string, required: false, description: "Case-insensitive fragment of an author's name"
+      parameter name: :title, in: :query, type: :string, required: false, description: "Case-insensitive fragment of the title. Combines with author"
 
       response "200", "books listed" do
         schema type: :object,
@@ -46,6 +47,46 @@ RSpec.describe "Books API", type: :request do
         let(:limit) { 1 }
 
         before { available_book && borrowed_book && create(:book, serial_number: "000103") }
+
+        run_test!
+      end
+
+      response "200", "books listed" do
+        schema type: :object,
+               required: %w[books meta],
+               properties: {
+                 books: { type: :array, items: { "$ref" => "#/components/schemas/book" } },
+                 meta: { "$ref" => "#/components/schemas/pagination" }
+               }
+
+        example_response :by_author, "Search with author=atwood", {
+          books: [ OpenapiExamples::AVAILABLE_BOOK ],
+          meta: { count: 1, page: 1, limit: 20, last: 1 }
+        }
+
+        let(:author) { "atwood" }
+
+        before { available_book && borrowed_book }
+
+        run_test!
+      end
+
+      response "200", "books listed" do
+        schema type: :object,
+               required: %w[books meta],
+               properties: {
+                 books: { type: :array, items: { "$ref" => "#/components/schemas/book" } },
+                 meta: { "$ref" => "#/components/schemas/pagination" }
+               }
+
+        example_response :by_title, "Search with title=omens", {
+          books: [ OpenapiExamples::BORROWED_BOOK ],
+          meta: { count: 1, page: 1, limit: 20, last: 1 }
+        }
+
+        let(:title) { "omens" }
+
+        before { available_book && borrowed_book }
 
         run_test!
       end
