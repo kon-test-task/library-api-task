@@ -212,6 +212,17 @@ RSpec.describe Book, type: :model do
     end
   end
 
+  describe "#borrow! with a reader deleted at the same moment" do
+    it "reports an unknown reader and leaves the book available" do
+      book = create(:book)
+      reader = create(:reader)
+      reader.delete
+
+      expect { book.borrow!(reader) }.to raise_error(Books::UnknownReader)
+      expect(book.reload).to be_available
+    end
+  end
+
   describe "#give_back!" do
     let(:book) { create(:book) }
     let(:reader) { create(:reader) }

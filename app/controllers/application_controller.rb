@@ -42,7 +42,8 @@ class ApplicationController < ActionController::API
 
   # The Postgres driver raises ArgumentError on a null byte in any string it sends.
   def refuse_null_bytes
-    return unless params.to_unsafe_h.to_query.include?("%00")
+    # The body is checked too, because a path parameter overwrites a body field of the same name in params.
+    return unless [ params.to_unsafe_h, request.request_parameters ].any? { |values| values.to_query.include?("%00") }
 
     render_error(:unprocessable_content, code: "invalid_characters", message: "Parameters must not contain null bytes")
   end

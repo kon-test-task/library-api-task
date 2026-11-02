@@ -10,6 +10,8 @@ const openapi = JSON.parse(fs.readFileSync(openapiFile, "utf8"));
 const BOOKS = "/api/v1/books";
 const BOOK = "/api/v1/books/{serial_number}";
 const STATUS = "/api/v1/books/{serial_number}/status";
+const READERS = "/api/v1/readers";
+const READER = "/api/v1/readers/{card_number}";
 const READER_BOOKS = "/api/v1/readers/{card_number}/books";
 const STATUS_TEXT = {
   200: "OK", 201: "Created", 204: "No Content", 400: "Bad Request", 404: "Not Found",
@@ -119,6 +121,30 @@ const addBook = (name, example) => buildRequest({
 });
 const deleteNewBook = (name) => buildRequest({ method: "DELETE", path: BOOK, name, status: 204, identifier: NEW_SERIAL });
 
+const NEW_CARD = "{{newCard}}";
+const newCard = script("prerequest", [
+  'pm.environment.set("newCard", String(600000 + Math.floor(Math.random() * 100000)));'
+]);
+
+const randomReader = (example) => ({
+  ...example,
+  card_number: NEW_CARD,
+  full_name: RANDOM_NAME,
+  email: "{{$randomEmail}}"
+});
+
+const addReader = (name) => buildRequest({
+  method: "POST", path: READERS, name, status: 201, events: [ newCard, filledIn ],
+  body: randomReader(requestExample("POST", READERS, "new_reader")),
+  examples: [ "created", "invalid_fields", "taken" ]
+});
+const updateReader = (name) => buildRequest({
+  method: "PATCH", path: READER, name, status: 200, identifier: NEW_CARD,
+  body: { full_name: RANDOM_NAME }, events: [ filledIn ],
+  examples: [ "renamed", "new_card", "taken" ]
+});
+const deleteNewReader = (name) => buildRequest({ method: "DELETE", path: READER, name, status: 204, identifier: NEW_CARD });
+
 const lend = requestExample("PATCH", STATUS, "lend");
 const giveBack = requestExample("PATCH", STATUS, "return");
 
@@ -136,17 +162,23 @@ const books = [
 ];
 
 const readers = [
+  buildRequest({ method: "GET", path: READER, name: "Shows a reader", status: 200, identifier: "100001" }),
   buildRequest({ method: "GET", path: READER_BOOKS, name: "Lists the books a reader has on loan", status: 200, identifier: "100001", examples: [ "on_loan", "not_found", "invalid_pagination", "bad_request", "internal_error" ] }),
-  buildRequest({ method: "GET", path: READER_BOOKS, name: "Lists a reader's full borrowing history", status: 200, identifier: "100002", search: "include_returned", examples: [ "with_returned" ] })
+  buildRequest({ method: "GET", path: READER_BOOKS, name: "Lists a reader's full borrowing history", status: 200, identifier: "100002", search: "include_returned", examples: [ "with_returned" ] }),
+  addReader("Adds a reader"),
+  updateReader("Updates a reader"),
+  deleteNewReader("Deletes the reader")
 ];
 
 const refused = [
   buildRequest({ method: "PATCH", path: STATUS, name: "Lends a book already on loan", status: 409, errorCode: "already_borrowed", identifier: "000102", body: lend, examples: [ "already_borrowed" ] }),
   buildRequest({ method: "PATCH", path: STATUS, name: "Lends to a card no reader has", status: 422, errorCode: "unknown_reader", identifier: "000101", body: { ...lend, card_number: "999999" }, examples: [ "unknown_reader" ] }),
   buildRequest({ method: "GET", path: BOOK, name: "Shows a book that does not exist", status: 404, errorCode: "not_found", identifier: "999999", examples: [ "not_found" ] }),
+  buildRequest({ method: "GET", path: READER, name: "Shows a reader that does not exist", status: 404, errorCode: "not_found", identifier: "999999", examples: [ "not_found" ] }),
   buildRequest({ method: "GET", path: READER_BOOKS, name: "Lists the books of a card no reader has", status: 404, errorCode: "not_found", identifier: "999999", examples: [ "not_found" ] }),
   buildRequest({ method: "POST", path: BOOKS, name: "Adds a book with a bad serial and no title", status: 422, errorCode: "invalid", body: { serial_number: "12a456", title: "", author: "Sandi Metz" }, examples: [ "invalid_fields" ] }),
-  buildRequest({ method: "DELETE", path: BOOK, name: "Deletes a book on loan", status: 409, errorCode: "already_borrowed", identifier: "000102", examples: [ "already_borrowed" ] })
+  buildRequest({ method: "DELETE", path: BOOK, name: "Deletes a book on loan", status: 409, errorCode: "already_borrowed", identifier: "000102", examples: [ "already_borrowed" ] }),
+  buildRequest({ method: "DELETE", path: READER, name: "Deletes a reader with loans", status: 409, errorCode: "has_loans", identifier: "100001", examples: [ "has_loans" ] })
 ];
 
 collection.item = [ { name: "Books", item: books }, { name: "Readers", item: readers }, { name: "Refused requests", item: refused } ];

@@ -3461,6 +3461,318 @@
       "item": [
         {
           "id": "71877c5c-86e8-edbf-66d6-c8dc0afbc4af",
+          "name": "Shows a reader",
+          "request": {
+            "name": "Shows a reader",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "readers",
+                ":card_number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "100001",
+                  "key": "card_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit library card number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "A registered reader",
+              "originalRequest": {
+                "name": "Shows a reader",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "100001",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"card_number\": \"100001\",\n  \"full_name\": \"Jan Kowalski\",\n  \"email\": \"jan.kowalski@example.com\"\n}"
+            },
+            {
+              "name": "Bytes in the query string that are not valid UTF-8",
+              "originalRequest": {
+                "name": "Shows a reader",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "100001",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"message\": \"Request parameters could not be read\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "An unknown card number",
+              "originalRequest": {
+                "name": "Shows a reader",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "100001",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Reader not found\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "A null byte in the card number",
+              "originalRequest": {
+                "name": "Shows a reader",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "100001",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid_characters\",\n      \"message\": \"Parameters must not contain null bytes\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "The log keeps the cause, and the response hides it",
+              "originalRequest": {
+                "name": "Shows a reader",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "100001",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"internal_error\",\n      \"message\": \"Something went wrong\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb416ca1-8282-4c58-f194-796f56228065",
           "name": "Lists the books a reader has on loan",
           "request": {
             "name": "Lists the books a reader has on loan",
@@ -3946,7 +4258,7 @@
           }
         },
         {
-          "id": "eb416ca1-8282-4c58-f194-796f56228065",
+          "id": "53faa70c-bec6-a736-032a-ee77ef09400b",
           "name": "Lists a reader's full borrowing history",
           "request": {
             "name": "Lists the books a reader has on loan",
@@ -4103,6 +4415,866 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test(\"returns 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c2001e37-eeb1-91da-f098-1ba81090452b",
+          "name": "Adds a reader",
+          "request": {
+            "name": "Adds a reader",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "readers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"card_number\": \"{{newCard}}\",\n  \"full_name\": \"{{$randomFullName}}\",\n  \"email\": \"{{$randomEmail}}\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "The new reader",
+              "originalRequest": {
+                "name": "Adds a reader",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"card_number\": \"{{newCard}}\",\n  \"full_name\": \"{{$randomFullName}}\",\n  \"email\": \"{{$randomEmail}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"card_number\": \"100004\",\n  \"full_name\": \"Maria Zielińska\",\n  \"email\": \"maria.zielinska@example.com\"\n}"
+            },
+            {
+              "name": "A bad card number, no name and a bad email",
+              "originalRequest": {
+                "name": "Adds a reader",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"card_number\": \"{{newCard}}\",\n  \"full_name\": \"{{$randomFullName}}\",\n  \"email\": \"{{$randomEmail}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid\",\n      \"message\": \"Card number must be a 6-digit number\",\n      \"field\": \"card_number\"\n    },\n    {\n      \"code\": \"blank\",\n      \"message\": \"Full name can't be blank\",\n      \"field\": \"full_name\"\n    },\n    {\n      \"code\": \"invalid\",\n      \"message\": \"Email is invalid\",\n      \"field\": \"email\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "An email another reader uses",
+              "originalRequest": {
+                "name": "Adds a reader",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"card_number\": \"{{newCard}}\",\n  \"full_name\": \"{{$randomFullName}}\",\n  \"email\": \"{{$randomEmail}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"taken\",\n      \"message\": \"Email has already been taken\",\n      \"field\": \"email\"\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set(\"newCard\", String(600000 + Math.floor(Math.random() * 100000)));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"fills in the random values\", () => pm.expect(pm.response.text()).to.not.include(\"{{\"));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 201\", () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c623d81-588a-6d32-e258-a81a7e5e29c1",
+          "name": "Updates a reader",
+          "request": {
+            "name": "Updates a reader, including their card number",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "readers",
+                ":card_number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "{{newCard}}",
+                  "key": "card_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) The reader's current card number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"{{$randomFullName}}\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "The reader with a new name",
+              "originalRequest": {
+                "name": "Updates a reader, including their card number",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newCard}}",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The reader's current card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"{{$randomFullName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"card_number\": \"100004\",\n  \"full_name\": \"Maria Nowak\",\n  \"email\": \"maria.zielinska@example.com\"\n}"
+            },
+            {
+              "name": "The reader with a new card number",
+              "originalRequest": {
+                "name": "Updates a reader, including their card number",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newCard}}",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The reader's current card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"{{$randomFullName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"card_number\": \"100005\",\n  \"full_name\": \"Maria Zielińska\",\n  \"email\": \"maria.zielinska@example.com\"\n}"
+            },
+            {
+              "name": "A card number another reader has",
+              "originalRequest": {
+                "name": "Updates a reader, including their card number",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newCard}}",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The reader's current card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"{{$randomFullName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"taken\",\n      \"message\": \"Card number has already been taken\",\n      \"field\": \"card_number\"\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"fills in the random values\", () => pm.expect(pm.response.text()).to.not.include(\"{{\"));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9bcdf8b-9b43-6086-e8c6-0ad602e9a2e1",
+          "name": "Deletes the reader",
+          "request": {
+            "name": "Deletes a reader who has no loans",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "readers",
+                ":card_number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "{{newCard}}",
+                  "key": "card_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit library card number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "reader deleted",
+              "originalRequest": {
+                "name": "Deletes a reader who has no loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newCard}}",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [],
+              "cookie": [],
+              "body": ""
+            },
+            {
+              "name": "Bytes in the query string that are not valid UTF-8",
+              "originalRequest": {
+                "name": "Deletes a reader who has no loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newCard}}",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"message\": \"Request parameters could not be read\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "An unknown card number",
+              "originalRequest": {
+                "name": "Deletes a reader who has no loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newCard}}",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Reader not found\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "A reader with an open or returned loan",
+              "originalRequest": {
+                "name": "Deletes a reader who has no loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newCard}}",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"has_loans\",\n      \"message\": \"Reader has loans and cannot be deleted\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "A null byte in the card number",
+              "originalRequest": {
+                "name": "Deletes a reader who has no loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newCard}}",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid_characters\",\n      \"message\": \"Parameters must not contain null bytes\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "The log keeps the cause, and the response hides it",
+              "originalRequest": {
+                "name": "Deletes a reader who has no loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newCard}}",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"internal_error\",\n      \"message\": \"Something went wrong\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 204\", () => pm.response.to.have.status(204));"
                 ]
               }
             }
@@ -4502,6 +5674,115 @@
         },
         {
           "id": "3845bd54-ee25-2bd9-9cb8-13762da9c0a8",
+          "name": "Shows a reader that does not exist",
+          "request": {
+            "name": "Shows a reader",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "readers",
+                ":card_number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "999999",
+                  "key": "card_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit library card number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "An unknown card number",
+              "originalRequest": {
+                "name": "Shows a reader",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "999999",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Reader not found\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"reports not_found\", () => pm.expect(pm.response.json().errors[0].code).to.eql(\"not_found\"));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1d5b2690-91cd-474c-0b69-512cc7069dd8",
           "name": "Lists the books of a card no reader has",
           "request": {
             "name": "Lists the books a reader has on loan",
@@ -4668,7 +5949,7 @@
           }
         },
         {
-          "id": "1d5b2690-91cd-474c-0b69-512cc7069dd8",
+          "id": "ea0a18fc-071f-aa16-ed14-42abdbb580e7",
           "name": "Adds a book with a bad serial and no title",
           "request": {
             "name": "Adds a book",
@@ -4779,7 +6060,7 @@
           }
         },
         {
-          "id": "ea0a18fc-071f-aa16-ed14-42abdbb580e7",
+          "id": "3520de3f-551b-177a-9a65-01bb7a38e1db",
           "name": "Deletes a book on loan",
           "request": {
             "name": "Deletes a book and its returned loans",
@@ -4879,6 +6160,115 @@
                 "exec": [
                   "pm.test(\"returns 409\", () => pm.response.to.have.status(409));",
                   "pm.test(\"reports already_borrowed\", () => pm.expect(pm.response.json().errors[0].code).to.eql(\"already_borrowed\"));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ae76d895-fe9c-7b08-9f31-c029384d68f4",
+          "name": "Deletes a reader with loans",
+          "request": {
+            "name": "Deletes a reader who has no loans",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "readers",
+                ":card_number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "100001",
+                  "key": "card_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit library card number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "A reader with an open or returned loan",
+              "originalRequest": {
+                "name": "Deletes a reader who has no loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "100001",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"has_loans\",\n      \"message\": \"Reader has loans and cannot be deleted\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 409\", () => pm.response.to.have.status(409));",
+                  "pm.test(\"reports has_loans\", () => pm.expect(pm.response.json().errors[0].code).to.eql(\"has_loans\"));"
                 ]
               }
             }

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
         patch :status, on: :member, to: "book_statuses#update"
       end
 
-      resources :readers, param: :card_number, only: [] do
+      resources :readers, param: :card_number, only: %i[show create update destroy] do
         resources :books, only: :index, controller: "reader_books"
       end
     end

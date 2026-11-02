@@ -873,6 +873,409 @@ paths:
                   summary: The log keeps the cause, and the response hides it
               schema:
                 "$ref": "#/components/schemas/errors"
+  "/api/v1/readers":
+    post:
+      summary: Adds a reader
+      tags:
+      - Readers
+      parameters: []
+      responses:
+        '201':
+          description: reader created
+          content:
+            application/json:
+              examples:
+                created:
+                  value:
+                    card_number: '100004'
+                    full_name: Maria Zielińska
+                    email: maria.zielinska@example.com
+                  summary: The new reader
+              schema:
+                "$ref": "#/components/schemas/reader"
+        '400':
+          description: the request could not be read
+          content:
+            application/json:
+              examples:
+                invalid_json:
+                  value:
+                    errors:
+                    - code: invalid_json
+                      message: Request body is not valid JSON
+                      field:
+                  summary: A body that does not parse
+                bad_request:
+                  value:
+                    errors:
+                    - code: bad_request
+                      message: Request parameters could not be read
+                      field:
+                  summary: Bytes in the query string that are not valid UTF-8
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '422':
+          description: invalid input
+          content:
+            application/json:
+              examples:
+                invalid_fields:
+                  value:
+                    errors:
+                    - code: invalid
+                      message: Card number must be a 6-digit number
+                      field: card_number
+                    - code: blank
+                      message: Full name can't be blank
+                      field: full_name
+                    - code: invalid
+                      message: Email is invalid
+                      field: email
+                  summary: A bad card number, no name and a bad email
+                taken:
+                  value:
+                    errors:
+                    - code: taken
+                      message: Email has already been taken
+                      field: email
+                  summary: An email another reader uses
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '500':
+          description: an unexpected failure
+          content:
+            application/json:
+              examples:
+                internal_error:
+                  value:
+                    errors:
+                    - code: internal_error
+                      message: Something went wrong
+                      field:
+                  summary: The log keeps the cause, and the response hides it
+              schema:
+                "$ref": "#/components/schemas/errors"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - card_number
+              - full_name
+              - email
+              properties:
+                card_number:
+                  type: string
+                  pattern: "^\\d{6}$"
+                  description: Six digits, leading zeros included
+                  example: '100004'
+                full_name:
+                  type: string
+                  example: Maria Zielińska
+                email:
+                  type: string
+                  format: email
+                  example: maria.zielinska@example.com
+            examples:
+              new_reader:
+                summary: A new reader
+                value:
+                  card_number: '100004'
+                  full_name: Maria Zielińska
+                  email: maria.zielinska@example.com
+        required: true
+  "/api/v1/readers/{card_number}":
+    get:
+      summary: Shows a reader
+      tags:
+      - Readers
+      parameters:
+      - name: card_number
+        in: path
+        description: Six-digit library card number
+        example: '100001'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: reader found
+          content:
+            application/json:
+              examples:
+                reader:
+                  value:
+                    card_number: '100001'
+                    full_name: Jan Kowalski
+                    email: jan.kowalski@example.com
+                  summary: A registered reader
+              schema:
+                "$ref": "#/components/schemas/reader"
+        '404':
+          description: no reader with that card number
+          content:
+            application/json:
+              examples:
+                not_found:
+                  value:
+                    errors:
+                    - code: not_found
+                      message: Reader not found
+                      field:
+                  summary: An unknown card number
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '422':
+          description: invalid input
+          content:
+            application/json:
+              examples:
+                invalid_characters:
+                  value:
+                    errors:
+                    - code: invalid_characters
+                      message: Parameters must not contain null bytes
+                      field:
+                  summary: A null byte in the card number
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '400':
+          description: the request could not be read
+          content:
+            application/json:
+              examples:
+                bad_request:
+                  value:
+                    errors:
+                    - code: bad_request
+                      message: Request parameters could not be read
+                      field:
+                  summary: Bytes in the query string that are not valid UTF-8
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '500':
+          description: an unexpected failure
+          content:
+            application/json:
+              examples:
+                internal_error:
+                  value:
+                    errors:
+                    - code: internal_error
+                      message: Something went wrong
+                      field:
+                  summary: The log keeps the cause, and the response hides it
+              schema:
+                "$ref": "#/components/schemas/errors"
+    patch:
+      summary: Updates a reader, including their card number
+      tags:
+      - Readers
+      parameters:
+      - name: card_number
+        in: path
+        description: The reader's current card number
+        example: '100004'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: reader updated
+          content:
+            application/json:
+              examples:
+                renamed:
+                  value:
+                    card_number: '100004'
+                    full_name: Maria Nowak
+                    email: maria.zielinska@example.com
+                  summary: The reader with a new name
+                new_card:
+                  value:
+                    card_number: '100005'
+                    full_name: Maria Zielińska
+                    email: maria.zielinska@example.com
+                  summary: The reader with a new card number
+              schema:
+                "$ref": "#/components/schemas/reader"
+        '400':
+          description: the request could not be read
+          content:
+            application/json:
+              examples:
+                invalid_json:
+                  value:
+                    errors:
+                    - code: invalid_json
+                      message: Request body is not valid JSON
+                      field:
+                  summary: A body that does not parse
+                bad_request:
+                  value:
+                    errors:
+                    - code: bad_request
+                      message: Request parameters could not be read
+                      field:
+                  summary: Bytes in the query string that are not valid UTF-8
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '404':
+          description: no reader with that card number
+          content:
+            application/json:
+              examples:
+                not_found:
+                  value:
+                    errors:
+                    - code: not_found
+                      message: Reader not found
+                      field:
+                  summary: An unknown card number
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '422':
+          description: invalid input
+          content:
+            application/json:
+              examples:
+                taken:
+                  value:
+                    errors:
+                    - code: taken
+                      message: Card number has already been taken
+                      field: card_number
+                  summary: A card number another reader has
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '500':
+          description: an unexpected failure
+          content:
+            application/json:
+              examples:
+                internal_error:
+                  value:
+                    errors:
+                    - code: internal_error
+                      message: Something went wrong
+                      field:
+                  summary: The log keeps the cause, and the response hides it
+              schema:
+                "$ref": "#/components/schemas/errors"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                card_number:
+                  type: string
+                  pattern: "^\\d{6}$"
+                  description: Six digits, leading zeros included
+                  example: '100004'
+                full_name:
+                  type: string
+                  example: Maria Zielińska
+                email:
+                  type: string
+                  format: email
+                  example: maria.zielinska@example.com
+            examples:
+              rename:
+                summary: Change the name
+                value:
+                  full_name: Maria Nowak
+              new_card:
+                summary: Replace a lost card. The old number then returns 404
+                value:
+                  card_number: '100005'
+        required: true
+    delete:
+      summary: Deletes a reader who has no loans
+      tags:
+      - Readers
+      parameters:
+      - name: card_number
+        in: path
+        description: Six-digit library card number
+        example: '100004'
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: reader deleted
+        '404':
+          description: no reader with that card number
+          content:
+            application/json:
+              examples:
+                not_found:
+                  value:
+                    errors:
+                    - code: not_found
+                      message: Reader not found
+                      field:
+                  summary: An unknown card number
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '409':
+          description: the reader has loans
+          content:
+            application/json:
+              examples:
+                has_loans:
+                  value:
+                    errors:
+                    - code: has_loans
+                      message: Reader has loans and cannot be deleted
+                      field:
+                  summary: A reader with an open or returned loan
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '422':
+          description: invalid input
+          content:
+            application/json:
+              examples:
+                invalid_characters:
+                  value:
+                    errors:
+                    - code: invalid_characters
+                      message: Parameters must not contain null bytes
+                      field:
+                  summary: A null byte in the card number
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '400':
+          description: the request could not be read
+          content:
+            application/json:
+              examples:
+                bad_request:
+                  value:
+                    errors:
+                    - code: bad_request
+                      message: Request parameters could not be read
+                      field:
+                  summary: Bytes in the query string that are not valid UTF-8
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '500':
+          description: an unexpected failure
+          content:
+            application/json:
+              examples:
+                internal_error:
+                  value:
+                    errors:
+                    - code: internal_error
+                      message: Something went wrong
+                      field:
+                  summary: The log keeps the cause, and the response hides it
+              schema:
+                "$ref": "#/components/schemas/errors"
 components:
   schemas:
     reader:

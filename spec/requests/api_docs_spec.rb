@@ -26,7 +26,9 @@ RSpec.describe "API docs", type: :request do
       "/api/v1/books" => %w[get post],
       "/api/v1/books/{serial_number}" => %w[get delete],
       "/api/v1/books/{serial_number}/status" => %w[patch],
-      "/api/v1/readers/{card_number}/books" => %w[get]
+      "/api/v1/readers/{card_number}/books" => %w[get],
+      "/api/v1/readers" => %w[post],
+      "/api/v1/readers/{card_number}" => %w[get patch delete]
     )
   end
 end

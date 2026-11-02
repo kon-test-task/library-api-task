@@ -10,6 +10,7 @@ RSpec.describe "Postman collection" do
   let(:readers) { folders.fetch("Readers") }
   let(:refused) { folders.fetch("Refused requests") }
   let(:book_requests) { books.pluck("request") }
+  let(:reader_requests) { readers.pluck("request") }
 
   def path_values(items, key)
     items.flat_map { |item| item["request"]["url"]["variable"].to_a }.select { |variable| variable["key"] == key }.pluck("value")
@@ -23,12 +24,13 @@ RSpec.describe "Postman collection" do
     expect(collection["variable"]).to include("key" => "baseUrl", "value" => "http://localhost:3000")
   end
 
-  it "ships a sample environment with the same baseUrl and a slot for the generated serial" do
+  it "ships a sample environment with the same baseUrl and slots for the generated serial and card" do
     environment = JSON.parse(Rails.root.join("postman/library-api.postman_environment.json").read)
 
     expect(environment["values"]).to contain_exactly(
       a_hash_including("key" => "baseUrl", "value" => "http://localhost:3000", "enabled" => true),
-      a_hash_including("key" => "newSerial", "value" => "", "enabled" => true)
+      a_hash_including("key" => "newSerial", "value" => "", "enabled" => true),
+      a_hash_including("key" => "newCard", "value" => "", "enabled" => true)
     )
   end
 
@@ -69,14 +71,36 @@ RSpec.describe "Postman collection" do
     end
   end
 
+  it "adds a reader with the documented fields and generated values" do
+    documented = openapi.dig("paths", "/api/v1/readers", "post", "requestBody", "content", "application/json", "examples").values.pluck("value")
+    bodies = reader_requests.select { |request| request["method"] == "POST" }.map { |request| JSON.parse(request["body"]["raw"]) }
+
+    expect(bodies.map(&:keys)).to match_array(documented.map(&:keys))
+    expect(bodies.pluck("card_number")).to all(eq("{{newCard}}"))
+    expect(bodies.pluck("full_name")).to all(eq("{{$randomFullName}}"))
+    expect(bodies.pluck("email")).to all(eq("{{$randomEmail}}"))
+  end
+
+  it "updates and deletes the new reader straight after adding them" do
+    methods = reader_requests.map { |request| request["method"] }
+    addition = methods.index("POST")
+
+    expect(scripts(readers[addition], "prerequest")).to include('pm.environment.set("newCard"')
+    expect(methods[addition + 1]).to eq("PATCH")
+    expect(path_values([ readers[addition + 1] ], "card_number")).to eq([ "{{newCard}}" ])
+    expect(methods[addition + 2]).to eq("DELETE")
+    expect(path_values([ readers[addition + 2] ], "card_number")).to eq([ "{{newCard}}" ])
+  end
+
   it "uses serial and card numbers the seeds create" do
     Rails.application.load_seed
 
     serials = path_values(books + refused, "serial_number").grep(/\A\d{6}\z/) - [ "999999" ]
-    cards = path_values(readers, "card_number") +
+    cards = path_values(readers + refused, "card_number").grep(/\A\d{6}\z/) - [ "999999" ] +
       book_requests.filter_map { |request| request.dig("body", "raw") }.filter_map { |raw| JSON.parse(raw)["card_number"] }
 
     expect(serials).not_to be_empty
+    expect(cards).not_to be_empty
     expect(Book.where(serial_number: serials).count).to eq(serials.uniq.size)
     expect(Reader.where(card_number: cards).count).to eq(cards.uniq.size)
   end
@@ -124,7 +148,7 @@ RSpec.describe "Postman collection" do
   end
 
   it "refuses every request in the refused folder with a documented error" do
-    expect(refused.size).to eq(6)
+    expect(refused.size).to eq(8)
 
     refused.each do |item|
       expect(item["response"].pluck("code")).to all(be_between(400, 499))

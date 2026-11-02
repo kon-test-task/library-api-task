@@ -55,6 +55,8 @@ class Book < ApplicationRecord
     end
   rescue ActiveRecord::RecordNotUnique
     raise Books::AlreadyBorrowed
+  rescue ActiveRecord::InvalidForeignKey
+    raise Books::UnknownReader
   end
 
   def give_back!

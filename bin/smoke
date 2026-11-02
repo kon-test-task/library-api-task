@@ -35,9 +35,15 @@ check 200 PATCH "/api/v1/books/000101/status" '{"status":"borrowed","card_number
 check 200 PATCH "/api/v1/books/000101/status" '{"status":"available"}'
 check 204 DELETE "/api/v1/books/004219"
 check 409 DELETE "/api/v1/books/000102"
+check 200 GET "/api/v1/readers/100001"
+check 404 GET "/api/v1/readers/999999"
 check 200 GET "/api/v1/readers/100001/books"
 check 200 GET "/api/v1/readers/100002/books?include_returned=true"
 check 404 GET "/api/v1/readers/999999/books"
+check 201 POST "/api/v1/readers" '{"card_number":"100099","full_name":"Smoke Test","email":"smoke.test@example.com"}'
+check 200 PATCH "/api/v1/readers/100099" '{"full_name":"Smoke Test Renamed"}'
+check 204 DELETE "/api/v1/readers/100099"
+check 409 DELETE "/api/v1/readers/100001"
 
 if [ "$failures" -gt 0 ]; then
   echo "$failures failed"

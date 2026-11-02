@@ -52,6 +52,12 @@ module OpenapiExamples
     author: "Sandi Metz"
   }.freeze
 
+  NEW_READER = { card_number: "100004", full_name: "Maria Zielińska", email: "maria.zielinska@example.com" }.freeze
+
+  RENAME_REQUEST = { full_name: "Maria Nowak" }.freeze
+
+  NEW_CARD_REQUEST = { card_number: "100005" }.freeze
+
   LEND_REQUEST = { status: "borrowed", card_number: JAN[:card_number] }.freeze
 
   SECOND_PAGE_META = { count: 3, page: 2, limit: 1, last: 3, previous: 1, next: 3 }.freeze

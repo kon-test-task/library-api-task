@@ -24,6 +24,7 @@ RSpec.describe "Seed data" do
   it "keeps the delete example available and the create examples free" do
     expect(Book.find_by!(serial_number: "000103")).to be_available
     expect(Book.where(serial_number: %w[004219 004220])).to be_empty
+    expect(Reader.where(card_number: [ OpenapiExamples::NEW_READER[:card_number], OpenapiExamples::NEW_CARD_REQUEST[:card_number] ])).to be_empty
   end
 
   it "keeps the history of the available book" do

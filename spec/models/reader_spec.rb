@@ -67,4 +67,33 @@ RSpec.describe Reader, type: :model do
   it "squishes whitespace in the full name" do
     expect(build(:reader, full_name: " Jan   Kowalski ").full_name).to eq("Jan Kowalski")
   end
+
+  describe "#remove!" do
+    let(:reader) { create(:reader) }
+
+    it "deletes a reader with no loans" do
+      reader.remove!
+
+      expect(described_class.exists?(reader.id)).to be(false)
+    end
+
+    it "refuses a reader with an open loan" do
+      create(:borrowing, reader: reader)
+
+      expect { reader.remove! }.to raise_error(Readers::HasLoans)
+      expect(described_class.exists?(reader.id)).to be(true)
+    end
+
+    it "refuses a reader with only returned loans" do
+      create(:borrowing, :returned, reader: reader)
+
+      expect { reader.remove! }.to raise_error(Readers::HasLoans)
+    end
+
+    it "turns a foreign key failure from a loan created at the same moment into the same refusal" do
+      allow(reader).to receive(:destroy!).and_raise(ActiveRecord::InvalidForeignKey)
+
+      expect { reader.remove! }.to raise_error(Readers::HasLoans)
+    end
+  end
 end
