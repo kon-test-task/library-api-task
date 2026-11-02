@@ -206,6 +206,7 @@ RSpec.describe "Readers API", type: :request do
         let(:card_number) { create(:reader, **OpenapiExamples::NEW_READER).card_number }
 
         run_test! do
+          expect(response.body).to be_empty
           expect(Reader.exists?(card_number: OpenapiExamples::NEW_READER[:card_number])).to be(false)
         end
       end

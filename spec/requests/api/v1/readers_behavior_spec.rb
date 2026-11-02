@@ -132,6 +132,7 @@ RSpec.describe "Readers API behavior", type: :request do
       delete "/api/v1/readers/#{reader.card_number}"
 
       expect(response).to have_http_status(:no_content)
+      expect(response.body).to be_empty
       expect(Reader.exists?(reader.id)).to be(false)
     end
 
