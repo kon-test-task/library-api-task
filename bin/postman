@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Regenerates the Postman collection from swagger/v1/swagger.yaml. Needs Node on the host.
+# Run this after rswag:specs:swaggerize changes the OpenAPI file.
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+CONVERTER_VERSION="6.4.2"
+JS_YAML_VERSION="4.1.0"
+OUTPUT="postman/library-api.postman_collection.json"
+OPENAPI_JSON="tmp/swagger.json"
+
+npx --yes "openapi-to-postmanv2@$CONVERTER_VERSION" \
+  -s swagger/v1/swagger.yaml \
+  -o "$OUTPUT" \
+  -O folderStrategy=Tags,parametersResolution=Example,enableOptionalParameters=false \
+  > /dev/null
+
+npx --yes "js-yaml@$JS_YAML_VERSION" swagger/v1/swagger.yaml > "$OPENAPI_JSON"
+
+node postman/customize_collection.js "$OUTPUT" "$OPENAPI_JSON"
+
+echo "Wrote $OUTPUT"

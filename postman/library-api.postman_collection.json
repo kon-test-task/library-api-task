@@ -1,0 +1,4910 @@
+{
+  "item": [
+    {
+      "name": "Books",
+      "item": [
+        {
+          "id": "9be6d333-848d-ed17-1110-1fc30c107c3b",
+          "name": "Lends a book to a reader",
+          "request": {
+            "name": "Lends a book to a reader or marks it returned",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books",
+                ":serial_number",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "000101",
+                  "key": "serial_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit serial number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"borrowed\",\n  \"card_number\": \"100001\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "Lent to card 100001, due in 30 days",
+              "originalRequest": {
+                "name": "Lends a book to a reader or marks it returned",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"borrowed\",\n  \"card_number\": \"100001\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"serial_number\": \"000101\",\n  \"title\": \"Oryx and Crake\",\n  \"status\": \"borrowed\",\n  \"author\": \"Margaret Atwood\",\n  \"authors\": [\n    \"Margaret Atwood\"\n  ],\n  \"borrowed\": true,\n  \"current_loan\": {\n    \"borrowed_at\": \"2026-11-02T09:00:00.000+01:00\",\n    \"due_date\": \"2026-12-02\",\n    \"returned_at\": null,\n    \"reader\": {\n      \"card_number\": \"100001\",\n      \"full_name\": \"Jan Kowalski\",\n      \"email\": \"jan.kowalski@example.com\"\n    }\n  },\n  \"loans\": [\n    {\n      \"borrowed_at\": \"2026-11-02T09:00:00.000+01:00\",\n      \"due_date\": \"2026-12-02\",\n      \"returned_at\": null,\n      \"reader\": {\n        \"card_number\": \"100001\",\n        \"full_name\": \"Jan Kowalski\",\n        \"email\": \"jan.kowalski@example.com\"\n      }\n    },\n    {\n      \"borrowed_at\": \"2026-09-01T10:00:00.000+02:00\",\n      \"due_date\": \"2026-10-01\",\n      \"returned_at\": \"2026-09-20T15:30:00.000+02:00\",\n      \"reader\": {\n        \"card_number\": \"100002\",\n        \"full_name\": \"Anna Nowak\",\n        \"email\": \"anna.nowak@example.com\"\n      }\n    }\n  ]\n}"
+            },
+            {
+              "name": "Lending a book that is on loan",
+              "originalRequest": {
+                "name": "Lends a book to a reader or marks it returned",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"borrowed\",\n  \"card_number\": \"100001\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"already_borrowed\",\n      \"message\": \"Book is already borrowed\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "A card number no reader has",
+              "originalRequest": {
+                "name": "Lends a book to a reader or marks it returned",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"borrowed\",\n  \"card_number\": \"100001\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"unknown_reader\",\n      \"message\": \"No reader has that card number\",\n      \"field\": \"card_number\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "Lending without a card number",
+              "originalRequest": {
+                "name": "Lends a book to a reader or marks it returned",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"borrowed\",\n  \"card_number\": \"100001\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"missing_card_number\",\n      \"message\": \"card_number is required to borrow a book\",\n      \"field\": \"card_number\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "A status other than borrowed or available",
+              "originalRequest": {
+                "name": "Lends a book to a reader or marks it returned",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"borrowed\",\n  \"card_number\": \"100001\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid_status\",\n      \"message\": \"Status must be borrowed or available\",\n      \"field\": \"status\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "No status in the body",
+              "originalRequest": {
+                "name": "Lends a book to a reader or marks it returned",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"borrowed\",\n  \"card_number\": \"100001\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"status is required\",\n      \"field\": \"status\"\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef5662bd-c95d-6210-db7b-b6bdbbc4f7a0",
+          "name": "Marks a book returned",
+          "request": {
+            "name": "Lends a book to a reader or marks it returned",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books",
+                ":serial_number",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "000101",
+                  "key": "serial_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit serial number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"available\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "Returned, with returned_at set",
+              "originalRequest": {
+                "name": "Lends a book to a reader or marks it returned",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"available\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"serial_number\": \"000102\",\n  \"title\": \"Good Omens\",\n  \"status\": \"available\",\n  \"author\": \"Terry Pratchett, Neil Gaiman\",\n  \"authors\": [\n    \"Terry Pratchett\",\n    \"Neil Gaiman\"\n  ],\n  \"borrowed\": false,\n  \"current_loan\": null,\n  \"loans\": [\n    {\n      \"borrowed_at\": \"2026-10-20T10:00:00.000+02:00\",\n      \"due_date\": \"2026-11-19\",\n      \"returned_at\": \"2026-11-02T09:00:00.000+01:00\",\n      \"reader\": {\n        \"card_number\": \"100001\",\n        \"full_name\": \"Jan Kowalski\",\n        \"email\": \"jan.kowalski@example.com\"\n      }\n    }\n  ]\n}"
+            },
+            {
+              "name": "Returning a book that is not on loan",
+              "originalRequest": {
+                "name": "Lends a book to a reader or marks it returned",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"available\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"already_available\",\n      \"message\": \"Book is already available\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "28f2170a-b299-0581-728f-850e19ddaa6a",
+          "name": "Lists books with their status and current borrower",
+          "request": {
+            "name": "Lists books with their status and current borrower",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Page number, starting at 1",
+                    "type": "text/plain"
+                  },
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Books per page, 20 by default, 100 at most",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Case-insensitive fragment of an author's name",
+                    "type": "text/plain"
+                  },
+                  "key": "author",
+                  "value": "atwood"
+                },
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Case-insensitive fragment of the title. Combines with author",
+                    "type": "text/plain"
+                  },
+                  "key": "title",
+                  "value": "omens"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "One available book and one borrowed book",
+              "originalRequest": {
+                "name": "Lists books with their status and current borrower",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Books per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Case-insensitive fragment of an author's name",
+                        "type": "text/plain"
+                      },
+                      "key": "author",
+                      "value": "atwood"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Case-insensitive fragment of the title. Combines with author",
+                        "type": "text/plain"
+                      },
+                      "key": "title",
+                      "value": "omens"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"books\": [\n    {\n      \"serial_number\": \"000101\",\n      \"title\": \"Oryx and Crake\",\n      \"status\": \"available\",\n      \"author\": \"Margaret Atwood\",\n      \"authors\": [\n        \"Margaret Atwood\"\n      ],\n      \"borrowed\": false,\n      \"current_loan\": null\n    },\n    {\n      \"serial_number\": \"000102\",\n      \"title\": \"Good Omens\",\n      \"status\": \"borrowed\",\n      \"author\": \"Terry Pratchett, Neil Gaiman\",\n      \"authors\": [\n        \"Terry Pratchett\",\n        \"Neil Gaiman\"\n      ],\n      \"borrowed\": true,\n      \"current_loan\": {\n        \"borrowed_at\": \"2026-10-20T10:00:00.000+02:00\",\n        \"due_date\": \"2026-11-19\",\n        \"returned_at\": null,\n        \"reader\": {\n          \"card_number\": \"100001\",\n          \"full_name\": \"Jan Kowalski\",\n          \"email\": \"jan.kowalski@example.com\"\n        }\n      }\n    }\n  ],\n  \"meta\": {\n    \"count\": 2,\n    \"page\": 1,\n    \"limit\": 20,\n    \"last\": 1\n  }\n}"
+            },
+            {
+              "name": "Page 2 of 3, with previous and next",
+              "originalRequest": {
+                "name": "Lists books with their status and current borrower",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Books per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Case-insensitive fragment of an author's name",
+                        "type": "text/plain"
+                      },
+                      "key": "author",
+                      "value": "atwood"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Case-insensitive fragment of the title. Combines with author",
+                        "type": "text/plain"
+                      },
+                      "key": "title",
+                      "value": "omens"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"books\": [\n    {\n      \"serial_number\": \"000102\",\n      \"title\": \"Good Omens\",\n      \"status\": \"borrowed\",\n      \"author\": \"Terry Pratchett, Neil Gaiman\",\n      \"authors\": [\n        \"Terry Pratchett\",\n        \"Neil Gaiman\"\n      ],\n      \"borrowed\": true,\n      \"current_loan\": {\n        \"borrowed_at\": \"2026-10-20T10:00:00.000+02:00\",\n        \"due_date\": \"2026-11-19\",\n        \"returned_at\": null,\n        \"reader\": {\n          \"card_number\": \"100001\",\n          \"full_name\": \"Jan Kowalski\",\n          \"email\": \"jan.kowalski@example.com\"\n        }\n      }\n    }\n  ],\n  \"meta\": {\n    \"count\": 3,\n    \"page\": 2,\n    \"limit\": 1,\n    \"last\": 3,\n    \"previous\": 1,\n    \"next\": 3\n  }\n}"
+            },
+            {
+              "name": "Bytes in the query string that are not valid UTF-8",
+              "originalRequest": {
+                "name": "Lists books with their status and current borrower",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Books per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Case-insensitive fragment of an author's name",
+                        "type": "text/plain"
+                      },
+                      "key": "author",
+                      "value": "atwood"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Case-insensitive fragment of the title. Combines with author",
+                        "type": "text/plain"
+                      },
+                      "key": "title",
+                      "value": "omens"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"message\": \"Request parameters could not be read\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "A negative limit",
+              "originalRequest": {
+                "name": "Lists books with their status and current borrower",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Books per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Case-insensitive fragment of an author's name",
+                        "type": "text/plain"
+                      },
+                      "key": "author",
+                      "value": "atwood"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Case-insensitive fragment of the title. Combines with author",
+                        "type": "text/plain"
+                      },
+                      "key": "title",
+                      "value": "omens"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid_pagination\",\n      \"message\": \"limit must be at least 1\",\n      \"field\": \"limit\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "The log keeps the cause, and the response hides it",
+              "originalRequest": {
+                "name": "Lists books with their status and current borrower",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Books per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Case-insensitive fragment of an author's name",
+                        "type": "text/plain"
+                      },
+                      "key": "author",
+                      "value": "atwood"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Case-insensitive fragment of the title. Combines with author",
+                        "type": "text/plain"
+                      },
+                      "key": "title",
+                      "value": "omens"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"internal_error\",\n      \"message\": \"Something went wrong\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "175e889e-7138-01ba-dca3-229c5a5ff4f3",
+          "name": "Searches books by author",
+          "request": {
+            "name": "Lists books with their status and current borrower",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Page number, starting at 1",
+                    "type": "text/plain"
+                  },
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Books per page, 20 by default, 100 at most",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Case-insensitive fragment of an author's name",
+                    "type": "text/plain"
+                  },
+                  "key": "author",
+                  "value": "atwood"
+                },
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Case-insensitive fragment of the title. Combines with author",
+                    "type": "text/plain"
+                  },
+                  "key": "title",
+                  "value": "omens"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "Search with author=atwood",
+              "originalRequest": {
+                "name": "Lists books with their status and current borrower",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Books per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Case-insensitive fragment of an author's name",
+                        "type": "text/plain"
+                      },
+                      "key": "author",
+                      "value": "atwood"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Case-insensitive fragment of the title. Combines with author",
+                        "type": "text/plain"
+                      },
+                      "key": "title",
+                      "value": "omens"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"books\": [\n    {\n      \"serial_number\": \"000101\",\n      \"title\": \"Oryx and Crake\",\n      \"status\": \"available\",\n      \"author\": \"Margaret Atwood\",\n      \"authors\": [\n        \"Margaret Atwood\"\n      ],\n      \"borrowed\": false,\n      \"current_loan\": null\n    }\n  ],\n  \"meta\": {\n    \"count\": 1,\n    \"page\": 1,\n    \"limit\": 20,\n    \"last\": 1\n  }\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "423f5dcb-fdc9-1d8a-a748-b04df4abc008",
+          "name": "Searches books by title",
+          "request": {
+            "name": "Lists books with their status and current borrower",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Page number, starting at 1",
+                    "type": "text/plain"
+                  },
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Books per page, 20 by default, 100 at most",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Case-insensitive fragment of an author's name",
+                    "type": "text/plain"
+                  },
+                  "key": "author",
+                  "value": "atwood"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Case-insensitive fragment of the title. Combines with author",
+                    "type": "text/plain"
+                  },
+                  "key": "title",
+                  "value": "omens"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "Search with title=omens",
+              "originalRequest": {
+                "name": "Lists books with their status and current borrower",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Books per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Case-insensitive fragment of an author's name",
+                        "type": "text/plain"
+                      },
+                      "key": "author",
+                      "value": "atwood"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Case-insensitive fragment of the title. Combines with author",
+                        "type": "text/plain"
+                      },
+                      "key": "title",
+                      "value": "omens"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"books\": [\n    {\n      \"serial_number\": \"000102\",\n      \"title\": \"Good Omens\",\n      \"status\": \"borrowed\",\n      \"author\": \"Terry Pratchett, Neil Gaiman\",\n      \"authors\": [\n        \"Terry Pratchett\",\n        \"Neil Gaiman\"\n      ],\n      \"borrowed\": true,\n      \"current_loan\": {\n        \"borrowed_at\": \"2026-10-20T10:00:00.000+02:00\",\n        \"due_date\": \"2026-11-19\",\n        \"returned_at\": null,\n        \"reader\": {\n          \"card_number\": \"100001\",\n          \"full_name\": \"Jan Kowalski\",\n          \"email\": \"jan.kowalski@example.com\"\n        }\n      }\n    }\n  ],\n  \"meta\": {\n    \"count\": 1,\n    \"page\": 1,\n    \"limit\": 20,\n    \"last\": 1\n  }\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "44e70366-5938-4e05-3566-484eb9766ac3",
+          "name": "Shows a book with its full borrowing history",
+          "request": {
+            "name": "Shows a book with its full borrowing history",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books",
+                ":serial_number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "000101",
+                  "key": "serial_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit serial number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "A book with one returned loan",
+              "originalRequest": {
+                "name": "Shows a book with its full borrowing history",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"serial_number\": \"000101\",\n  \"title\": \"Oryx and Crake\",\n  \"status\": \"available\",\n  \"author\": \"Margaret Atwood\",\n  \"authors\": [\n    \"Margaret Atwood\"\n  ],\n  \"borrowed\": false,\n  \"current_loan\": null,\n  \"loans\": [\n    {\n      \"borrowed_at\": \"2026-09-01T10:00:00.000+02:00\",\n      \"due_date\": \"2026-10-01\",\n      \"returned_at\": \"2026-09-20T15:30:00.000+02:00\",\n      \"reader\": {\n        \"card_number\": \"100002\",\n        \"full_name\": \"Anna Nowak\",\n        \"email\": \"anna.nowak@example.com\"\n      }\n    }\n  ]\n}"
+            },
+            {
+              "name": "Bytes in the query string that are not valid UTF-8",
+              "originalRequest": {
+                "name": "Shows a book with its full borrowing history",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"message\": \"Request parameters could not be read\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "An unknown serial number",
+              "originalRequest": {
+                "name": "Shows a book with its full borrowing history",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Book not found\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "A null byte in the serial number",
+              "originalRequest": {
+                "name": "Shows a book with its full borrowing history",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid_characters\",\n      \"message\": \"Parameters must not contain null bytes\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "The log keeps the cause, and the response hides it",
+              "originalRequest": {
+                "name": "Shows a book with its full borrowing history",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"internal_error\",\n      \"message\": \"Something went wrong\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b63b5a9f-9fa0-0197-cbfa-2f065141e4bc",
+          "name": "Adds a book with two authors",
+          "request": {
+            "name": "Adds a book",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"authors\": [\n    \"{{$randomFullName}}\",\n    \"{{$randomFullName}}\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "The new book, available",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"authors\": [\n    \"{{$randomFullName}}\",\n    \"{{$randomFullName}}\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"serial_number\": \"004219\",\n  \"title\": \"The Pragmatic Programmer\",\n  \"authors\": [\n    \"Andrew Hunt\",\n    \"David Thomas\"\n  ],\n  \"status\": \"available\",\n  \"author\": \"Andrew Hunt, David Thomas\",\n  \"borrowed\": false,\n  \"current_loan\": null\n}"
+            },
+            {
+              "name": "A new book with one author",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"authors\": [\n    \"{{$randomFullName}}\",\n    \"{{$randomFullName}}\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"serial_number\": \"004220\",\n  \"title\": \"Practical Object-Oriented Design\",\n  \"author\": \"Sandi Metz\",\n  \"status\": \"available\",\n  \"authors\": [\n    \"Sandi Metz\"\n  ],\n  \"borrowed\": false,\n  \"current_loan\": null\n}"
+            },
+            {
+              "name": "A body that does not parse",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"authors\": [\n    \"{{$randomFullName}}\",\n    \"{{$randomFullName}}\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid_json\",\n      \"message\": \"Request body is not valid JSON\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "Bytes in the query string that are not valid UTF-8",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"authors\": [\n    \"{{$randomFullName}}\",\n    \"{{$randomFullName}}\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"message\": \"Request parameters could not be read\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "Bad serial number and blank title",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"authors\": [\n    \"{{$randomFullName}}\",\n    \"{{$randomFullName}}\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid\",\n      \"message\": \"Serial number must be a 6-digit number\",\n      \"field\": \"serial_number\"\n    },\n    {\n      \"code\": \"blank\",\n      \"message\": \"Title can't be blank\",\n      \"field\": \"title\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "A serial number another book uses",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"authors\": [\n    \"{{$randomFullName}}\",\n    \"{{$randomFullName}}\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"taken\",\n      \"message\": \"Serial number has already been taken\",\n      \"field\": \"serial_number\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "Both author and authors in one request",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"authors\": [\n    \"{{$randomFullName}}\",\n    \"{{$randomFullName}}\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"ambiguous_authors\",\n      \"message\": \"Send either author or authors, not both\",\n      \"field\": \"authors\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "The log keeps the cause, and the response hides it",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"authors\": [\n    \"{{$randomFullName}}\",\n    \"{{$randomFullName}}\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"internal_error\",\n      \"message\": \"Something went wrong\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set(\"newSerial\", String(500000 + Math.floor(Math.random() * 100000)));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"fills in the random values\", () => pm.expect(pm.response.text()).to.not.include(\"{{\"));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 201\", () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e357bcc-c56e-6ba7-5bb6-21afba2743e6",
+          "name": "Deletes the book with two authors",
+          "request": {
+            "name": "Deletes a book and its returned loans",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books",
+                ":serial_number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "{{newSerial}}",
+                  "key": "serial_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit serial number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "book deleted",
+              "originalRequest": {
+                "name": "Deletes a book and its returned loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newSerial}}",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [],
+              "cookie": [],
+              "body": ""
+            },
+            {
+              "name": "Bytes in the query string that are not valid UTF-8",
+              "originalRequest": {
+                "name": "Deletes a book and its returned loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newSerial}}",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"message\": \"Request parameters could not be read\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "An unknown serial number",
+              "originalRequest": {
+                "name": "Deletes a book and its returned loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newSerial}}",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Book not found\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "Serial number 000102 is on loan",
+              "originalRequest": {
+                "name": "Deletes a book and its returned loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newSerial}}",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"already_borrowed\",\n      \"message\": \"Book is already borrowed\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "A null byte in the serial number",
+              "originalRequest": {
+                "name": "Deletes a book and its returned loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newSerial}}",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid_characters\",\n      \"message\": \"Parameters must not contain null bytes\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "The log keeps the cause, and the response hides it",
+              "originalRequest": {
+                "name": "Deletes a book and its returned loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newSerial}}",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"internal_error\",\n      \"message\": \"Something went wrong\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 204\", () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9b124b5-2dce-f8f9-035d-e5c693480881",
+          "name": "Adds a book with one author",
+          "request": {
+            "name": "Adds a book",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"author\": \"{{$randomFullName}}\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "The new book, available",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"author\": \"{{$randomFullName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"serial_number\": \"004219\",\n  \"title\": \"The Pragmatic Programmer\",\n  \"authors\": [\n    \"Andrew Hunt\",\n    \"David Thomas\"\n  ],\n  \"status\": \"available\",\n  \"author\": \"Andrew Hunt, David Thomas\",\n  \"borrowed\": false,\n  \"current_loan\": null\n}"
+            },
+            {
+              "name": "A new book with one author",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"author\": \"{{$randomFullName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"serial_number\": \"004220\",\n  \"title\": \"Practical Object-Oriented Design\",\n  \"author\": \"Sandi Metz\",\n  \"status\": \"available\",\n  \"authors\": [\n    \"Sandi Metz\"\n  ],\n  \"borrowed\": false,\n  \"current_loan\": null\n}"
+            },
+            {
+              "name": "A body that does not parse",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"author\": \"{{$randomFullName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid_json\",\n      \"message\": \"Request body is not valid JSON\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "Bytes in the query string that are not valid UTF-8",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"author\": \"{{$randomFullName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"message\": \"Request parameters could not be read\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "Bad serial number and blank title",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"author\": \"{{$randomFullName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid\",\n      \"message\": \"Serial number must be a 6-digit number\",\n      \"field\": \"serial_number\"\n    },\n    {\n      \"code\": \"blank\",\n      \"message\": \"Title can't be blank\",\n      \"field\": \"title\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "A serial number another book uses",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"author\": \"{{$randomFullName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"taken\",\n      \"message\": \"Serial number has already been taken\",\n      \"field\": \"serial_number\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "Both author and authors in one request",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"author\": \"{{$randomFullName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"ambiguous_authors\",\n      \"message\": \"Send either author or authors, not both\",\n      \"field\": \"authors\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "The log keeps the cause, and the response hides it",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"{{newSerial}}\",\n  \"title\": \"{{$randomCatchPhrase}}\",\n  \"author\": \"{{$randomFullName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"internal_error\",\n      \"message\": \"Something went wrong\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set(\"newSerial\", String(500000 + Math.floor(Math.random() * 100000)));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"fills in the random values\", () => pm.expect(pm.response.text()).to.not.include(\"{{\"));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 201\", () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "747a79f0-41aa-df6e-b0d9-2f22d8bb596c",
+          "name": "Deletes the book with one author",
+          "request": {
+            "name": "Deletes a book and its returned loans",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books",
+                ":serial_number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "{{newSerial}}",
+                  "key": "serial_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit serial number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "book deleted",
+              "originalRequest": {
+                "name": "Deletes a book and its returned loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newSerial}}",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [],
+              "cookie": [],
+              "body": ""
+            },
+            {
+              "name": "Bytes in the query string that are not valid UTF-8",
+              "originalRequest": {
+                "name": "Deletes a book and its returned loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newSerial}}",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"message\": \"Request parameters could not be read\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "An unknown serial number",
+              "originalRequest": {
+                "name": "Deletes a book and its returned loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newSerial}}",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Book not found\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "Serial number 000102 is on loan",
+              "originalRequest": {
+                "name": "Deletes a book and its returned loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newSerial}}",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"already_borrowed\",\n      \"message\": \"Book is already borrowed\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "A null byte in the serial number",
+              "originalRequest": {
+                "name": "Deletes a book and its returned loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newSerial}}",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid_characters\",\n      \"message\": \"Parameters must not contain null bytes\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "The log keeps the cause, and the response hides it",
+              "originalRequest": {
+                "name": "Deletes a book and its returned loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "{{newSerial}}",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"internal_error\",\n      \"message\": \"Something went wrong\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 204\", () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "id": "f13a1080-89ad-42d3-a9da-31060b6d3a8d"
+    },
+    {
+      "name": "Readers",
+      "item": [
+        {
+          "id": "71877c5c-86e8-edbf-66d6-c8dc0afbc4af",
+          "name": "Lists the books a reader has on loan",
+          "request": {
+            "name": "Lists the books a reader has on loan",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "readers",
+                ":card_number",
+                "books"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Page number, starting at 1",
+                    "type": "text/plain"
+                  },
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Loans per page, 20 by default, 100 at most",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Send true to add returned loans, for the reader's full history",
+                    "type": "text/plain"
+                  },
+                  "key": "include_returned",
+                  "value": "true"
+                }
+              ],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "100001",
+                  "key": "card_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit library card number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "The books on loan to card 100001",
+              "originalRequest": {
+                "name": "Lists the books a reader has on loan",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Loans per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Send true to add returned loans, for the reader's full history",
+                        "type": "text/plain"
+                      },
+                      "key": "include_returned",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "100001",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"reader\": {\n    \"card_number\": \"100001\",\n    \"full_name\": \"Jan Kowalski\",\n    \"email\": \"jan.kowalski@example.com\"\n  },\n  \"loans\": [\n    {\n      \"borrowed_at\": \"2026-10-20T10:00:00.000+02:00\",\n      \"due_date\": \"2026-11-19\",\n      \"returned_at\": null,\n      \"book\": {\n        \"serial_number\": \"000102\",\n        \"title\": \"Good Omens\",\n        \"author\": \"Terry Pratchett, Neil Gaiman\"\n      }\n    }\n  ],\n  \"meta\": {\n    \"count\": 1,\n    \"page\": 1,\n    \"limit\": 20,\n    \"last\": 1\n  }\n}"
+            },
+            {
+              "name": "Bytes in the query string that are not valid UTF-8",
+              "originalRequest": {
+                "name": "Lists the books a reader has on loan",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Loans per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Send true to add returned loans, for the reader's full history",
+                        "type": "text/plain"
+                      },
+                      "key": "include_returned",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "100001",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"message\": \"Request parameters could not be read\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "An unknown card number",
+              "originalRequest": {
+                "name": "Lists the books a reader has on loan",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Loans per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Send true to add returned loans, for the reader's full history",
+                        "type": "text/plain"
+                      },
+                      "key": "include_returned",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "100001",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Reader not found\",\n      \"field\": null\n    }\n  ]\n}"
+            },
+            {
+              "name": "A negative limit",
+              "originalRequest": {
+                "name": "Lists the books a reader has on loan",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Loans per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Send true to add returned loans, for the reader's full history",
+                        "type": "text/plain"
+                      },
+                      "key": "include_returned",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "100001",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid_pagination\",\n      \"message\": \"limit must be at least 1\",\n      \"field\": \"limit\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "The log keeps the cause, and the response hides it",
+              "originalRequest": {
+                "name": "Lists the books a reader has on loan",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Loans per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Send true to add returned loans, for the reader's full history",
+                        "type": "text/plain"
+                      },
+                      "key": "include_returned",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "100001",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"internal_error\",\n      \"message\": \"Something went wrong\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb416ca1-8282-4c58-f194-796f56228065",
+          "name": "Lists a reader's full borrowing history",
+          "request": {
+            "name": "Lists the books a reader has on loan",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "readers",
+                ":card_number",
+                "books"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Page number, starting at 1",
+                    "type": "text/plain"
+                  },
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Loans per page, 20 by default, 100 at most",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Send true to add returned loans, for the reader's full history",
+                    "type": "text/plain"
+                  },
+                  "key": "include_returned",
+                  "value": "true"
+                }
+              ],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "100002",
+                  "key": "card_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit library card number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "The full history of card 100002, with include_returned=true",
+              "originalRequest": {
+                "name": "Lists the books a reader has on loan",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Loans per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Send true to add returned loans, for the reader's full history",
+                        "type": "text/plain"
+                      },
+                      "key": "include_returned",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "100002",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"reader\": {\n    \"card_number\": \"100002\",\n    \"full_name\": \"Anna Nowak\",\n    \"email\": \"anna.nowak@example.com\"\n  },\n  \"loans\": [\n    {\n      \"borrowed_at\": \"2026-09-01T10:00:00.000+02:00\",\n      \"due_date\": \"2026-10-01\",\n      \"returned_at\": \"2026-09-20T15:30:00.000+02:00\",\n      \"book\": {\n        \"serial_number\": \"000101\",\n        \"title\": \"Oryx and Crake\",\n        \"author\": \"Margaret Atwood\"\n      }\n    }\n  ],\n  \"meta\": {\n    \"count\": 1,\n    \"page\": 1,\n    \"limit\": 20,\n    \"last\": 1\n  }\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "id": "97b45138-587e-3ee5-aed2-b49ef5bb65fd"
+    },
+    {
+      "name": "Refused requests",
+      "item": [
+        {
+          "id": "975c69fc-0d67-be83-e801-11c0e8b5b7c1",
+          "name": "Lends a book already on loan",
+          "request": {
+            "name": "Lends a book to a reader or marks it returned",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books",
+                ":serial_number",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "000102",
+                  "key": "serial_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit serial number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"borrowed\",\n  \"card_number\": \"100001\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "Lending a book that is on loan",
+              "originalRequest": {
+                "name": "Lends a book to a reader or marks it returned",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000102",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"borrowed\",\n  \"card_number\": \"100001\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"already_borrowed\",\n      \"message\": \"Book is already borrowed\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 409\", () => pm.response.to.have.status(409));",
+                  "pm.test(\"reports already_borrowed\", () => pm.expect(pm.response.json().errors[0].code).to.eql(\"already_borrowed\"));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4e486f0-cad0-f07f-66ab-fb53c22446ca",
+          "name": "Lends to a card no reader has",
+          "request": {
+            "name": "Lends a book to a reader or marks it returned",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books",
+                ":serial_number",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "000101",
+                  "key": "serial_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit serial number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"borrowed\",\n  \"card_number\": \"999999\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "A card number no reader has",
+              "originalRequest": {
+                "name": "Lends a book to a reader or marks it returned",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000101",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"borrowed\",\n  \"card_number\": \"999999\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"unknown_reader\",\n      \"message\": \"No reader has that card number\",\n      \"field\": \"card_number\"\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 422\", () => pm.response.to.have.status(422));",
+                  "pm.test(\"reports unknown_reader\", () => pm.expect(pm.response.json().errors[0].code).to.eql(\"unknown_reader\"));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63501c82-e6ec-b879-1ac0-2be94d2a4659",
+          "name": "Shows a book that does not exist",
+          "request": {
+            "name": "Shows a book with its full borrowing history",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books",
+                ":serial_number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "999999",
+                  "key": "serial_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit serial number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "An unknown serial number",
+              "originalRequest": {
+                "name": "Shows a book with its full borrowing history",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "999999",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Book not found\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"reports not_found\", () => pm.expect(pm.response.json().errors[0].code).to.eql(\"not_found\"));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3845bd54-ee25-2bd9-9cb8-13762da9c0a8",
+          "name": "Lists the books of a card no reader has",
+          "request": {
+            "name": "Lists the books a reader has on loan",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "readers",
+                ":card_number",
+                "books"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Page number, starting at 1",
+                    "type": "text/plain"
+                  },
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Loans per page, 20 by default, 100 at most",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "disabled": true,
+                  "description": {
+                    "content": "Send true to add returned loans, for the reader's full history",
+                    "type": "text/plain"
+                  },
+                  "key": "include_returned",
+                  "value": "true"
+                }
+              ],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "999999",
+                  "key": "card_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit library card number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "An unknown card number",
+              "originalRequest": {
+                "name": "Lists the books a reader has on loan",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "readers",
+                    ":card_number",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Page number, starting at 1",
+                        "type": "text/plain"
+                      },
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Loans per page, 20 by default, 100 at most",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "disabled": true,
+                      "description": {
+                        "content": "Send true to add returned loans, for the reader's full history",
+                        "type": "text/plain"
+                      },
+                      "key": "include_returned",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "999999",
+                      "key": "card_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit library card number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {},
+                "auth": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Reader not found\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"reports not_found\", () => pm.expect(pm.response.json().errors[0].code).to.eql(\"not_found\"));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1d5b2690-91cd-474c-0b69-512cc7069dd8",
+          "name": "Adds a book with a bad serial and no title",
+          "request": {
+            "name": "Adds a book",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serial_number\": \"12a456\",\n  \"title\": \"\",\n  \"author\": \"Sandi Metz\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "Bad serial number and blank title",
+              "originalRequest": {
+                "name": "Adds a book",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serial_number\": \"12a456\",\n  \"title\": \"\",\n  \"author\": \"Sandi Metz\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": null
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid\",\n      \"message\": \"Serial number must be a 6-digit number\",\n      \"field\": \"serial_number\"\n    },\n    {\n      \"code\": \"blank\",\n      \"message\": \"Title can't be blank\",\n      \"field\": \"title\"\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 422\", () => pm.response.to.have.status(422));",
+                  "pm.test(\"reports invalid\", () => pm.expect(pm.response.json().errors[0].code).to.eql(\"invalid\"));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ea0a18fc-071f-aa16-ed14-42abdbb580e7",
+          "name": "Deletes a book on loan",
+          "request": {
+            "name": "Deletes a book and its returned loans",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "books",
+                ":serial_number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "000102",
+                  "key": "serial_number",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Six-digit serial number",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "name": "Serial number 000102 is on loan",
+              "originalRequest": {
+                "name": "Deletes a book and its returned loans",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "books",
+                    ":serial_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "type": "any",
+                      "value": "000102",
+                      "key": "serial_number",
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Six-digit serial number",
+                        "type": "text/plain"
+                      }
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {},
+                "auth": null
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"already_borrowed\",\n      \"message\": \"Book is already borrowed\",\n      \"field\": null\n    }\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"returns 409\", () => pm.response.to.have.status(409));",
+                  "pm.test(\"reports already_borrowed\", () => pm.expect(pm.response.json().errors[0].code).to.eql(\"already_borrowed\"));"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "id": "a0ae6873-41ae-823e-a290-dca521e99de7"
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "info": {
+    "_postman_id": "7c5b5726-6af0-5046-c786-4242df9924b3",
+    "name": "Library API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Library staff use this API to track books, readers and loans.",
+      "type": "text/plain"
+    }
+  }
+}
