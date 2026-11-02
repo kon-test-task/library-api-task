@@ -55,6 +55,13 @@ group :development, :test do
   # Request specs that generate the OpenAPI file
   gem "rswag-specs", "~> 2.17"
 
+  # Serve the OpenAPI file and Swagger UI at /api-docs
+  gem "rswag-api", "~> 2.17"
+  gem "rswag-ui", "~> 2.17"
+
+  # rswag-ui requires ostruct without declaring it, and Ruby 4.0 no longer loads it by default
+  gem "ostruct", "~> 0.6"
+
   # Detect N+1 queries and unused eager loading
   gem "bullet", "~> 8.3"
 end

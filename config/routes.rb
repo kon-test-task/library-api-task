@@ -13,6 +13,11 @@ Rails.application.routes.draw do
     end
   end
 
+  if Rails.env.local?
+    mount Rswag::Ui::Engine, at: "/api-docs"
+    mount Rswag::Api::Engine, at: "/api-docs"
+  end
+
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end

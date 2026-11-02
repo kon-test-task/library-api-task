@@ -1,0 +1,804 @@
+---
+openapi: 3.0.1
+info:
+  title: Library API
+  description: Library staff use this API to track books, readers and loans.
+  version: v1
+paths:
+  "/api/v1/books/{serial_number}/status":
+    patch:
+      summary: Lends a book to a reader or marks it returned
+      tags:
+      - Books
+      parameters:
+      - name: serial_number
+        in: path
+        description: Six-digit serial number
+        example: '000101'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: status changed
+          content:
+            application/json:
+              examples:
+                lent:
+                  value:
+                    serial_number: '000101'
+                    title: Oryx and Crake
+                    status: borrowed
+                    author: Margaret Atwood
+                    authors:
+                    - Margaret Atwood
+                    borrowed: true
+                    current_loan:
+                      borrowed_at: '2026-11-02T09:00:00.000+01:00'
+                      due_date: '2026-12-02'
+                      returned_at:
+                      reader:
+                        card_number: '100001'
+                        full_name: Jan Kowalski
+                        email: jan.kowalski@example.com
+                    loans:
+                    - borrowed_at: '2026-11-02T09:00:00.000+01:00'
+                      due_date: '2026-12-02'
+                      returned_at:
+                      reader:
+                        card_number: '100001'
+                        full_name: Jan Kowalski
+                        email: jan.kowalski@example.com
+                    - borrowed_at: '2026-09-01T10:00:00.000+02:00'
+                      due_date: '2026-10-01'
+                      returned_at: '2026-09-20T15:30:00.000+02:00'
+                      reader:
+                        card_number: '100002'
+                        full_name: Anna Nowak
+                        email: anna.nowak@example.com
+                  summary: Lent to card 100001, due in 30 days
+                returned:
+                  value:
+                    serial_number: '000102'
+                    title: Good Omens
+                    status: available
+                    author: Terry Pratchett, Neil Gaiman
+                    authors:
+                    - Terry Pratchett
+                    - Neil Gaiman
+                    borrowed: false
+                    current_loan:
+                    loans:
+                    - borrowed_at: '2026-10-20T10:00:00.000+02:00'
+                      due_date: '2026-11-19'
+                      returned_at: '2026-11-02T09:00:00.000+01:00'
+                      reader:
+                        card_number: '100001'
+                        full_name: Jan Kowalski
+                        email: jan.kowalski@example.com
+                  summary: Returned, with returned_at set
+              schema:
+                "$ref": "#/components/schemas/book_with_history"
+        '400':
+          description: the body is not valid JSON
+          content:
+            application/json:
+              examples:
+                invalid_json:
+                  value:
+                    errors:
+                    - code: invalid_json
+                      message: Request body is not valid JSON
+                      field:
+                  summary: A body that does not parse
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '404':
+          description: no book with that serial number
+          content:
+            application/json:
+              examples:
+                not_found:
+                  value:
+                    errors:
+                    - code: not_found
+                      message: Book not found
+                      field:
+                  summary: An unknown serial number
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '409':
+          description: the book's state refuses the change
+          content:
+            application/json:
+              examples:
+                already_borrowed:
+                  value:
+                    errors:
+                    - code: already_borrowed
+                      message: Book is already borrowed
+                      field:
+                  summary: Lending a book that is on loan
+                already_available:
+                  value:
+                    errors:
+                    - code: already_available
+                      message: Book is already available
+                      field:
+                  summary: Returning a book that is not on loan
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '422':
+          description: invalid input
+          content:
+            application/json:
+              examples:
+                unknown_reader:
+                  value:
+                    errors:
+                    - code: unknown_reader
+                      message: No reader has that card number
+                      field: card_number
+                  summary: A card number no reader has
+                missing_card_number:
+                  value:
+                    errors:
+                    - code: missing_card_number
+                      message: card_number is required to borrow a book
+                      field: card_number
+                  summary: Lending without a card number
+                invalid_status:
+                  value:
+                    errors:
+                    - code: invalid_status
+                      message: Status must be borrowed or available
+                      field: status
+                  summary: A status other than borrowed or available
+                parameter_missing:
+                  value:
+                    errors:
+                    - code: parameter_missing
+                      message: status is required
+                      field: status
+                  summary: No status in the body
+              schema:
+                "$ref": "#/components/schemas/errors"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - status
+              properties:
+                status:
+                  type: string
+                  enum:
+                  - borrowed
+                  - available
+                  example: borrowed
+                card_number:
+                  type: string
+                  pattern: "^\\d{6}$"
+                  description: Six digits. Required when status is borrowed
+                  example: '100001'
+            examples:
+              lend:
+                summary: Lend the book to a reader
+                value:
+                  status: borrowed
+                  card_number: '100001'
+              return:
+                summary: Mark the book returned
+                value:
+                  status: available
+        required: true
+  "/api/v1/books":
+    get:
+      summary: Lists books with their status and current borrower
+      tags:
+      - Books
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number, starting at 1
+        example: 1
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Books per page, 20 by default, 100 at most
+        example: 20
+        schema:
+          type: integer
+      - name: author
+        in: query
+        required: false
+        description: Case-insensitive fragment of an author's name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: books listed
+          content:
+            application/json:
+              examples:
+                books:
+                  value:
+                    books:
+                    - serial_number: '000101'
+                      title: Oryx and Crake
+                      status: available
+                      author: Margaret Atwood
+                      authors:
+                      - Margaret Atwood
+                      borrowed: false
+                      current_loan:
+                    - serial_number: '000102'
+                      title: Good Omens
+                      status: borrowed
+                      author: Terry Pratchett, Neil Gaiman
+                      authors:
+                      - Terry Pratchett
+                      - Neil Gaiman
+                      borrowed: true
+                      current_loan:
+                        borrowed_at: '2026-10-20T10:00:00.000+02:00'
+                        due_date: '2026-11-19'
+                        returned_at:
+                        reader:
+                          card_number: '100001'
+                          full_name: Jan Kowalski
+                          email: jan.kowalski@example.com
+                    meta:
+                      count: 2
+                      page: 1
+                      limit: 20
+                      last: 1
+                  summary: One available book and one borrowed book
+                second_page:
+                  value:
+                    books:
+                    - serial_number: '000102'
+                      title: Good Omens
+                      status: borrowed
+                      author: Terry Pratchett, Neil Gaiman
+                      authors:
+                      - Terry Pratchett
+                      - Neil Gaiman
+                      borrowed: true
+                      current_loan:
+                        borrowed_at: '2026-10-20T10:00:00.000+02:00'
+                        due_date: '2026-11-19'
+                        returned_at:
+                        reader:
+                          card_number: '100001'
+                          full_name: Jan Kowalski
+                          email: jan.kowalski@example.com
+                    meta:
+                      count: 3
+                      page: 2
+                      limit: 1
+                      last: 3
+                      previous: 1
+                      next: 3
+                  summary: Page 2 of 3, with previous and next
+              schema:
+                type: object
+                required:
+                - books
+                - meta
+                properties:
+                  books:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/book"
+                  meta:
+                    "$ref": "#/components/schemas/pagination"
+        '422':
+          description: invalid pagination
+          content:
+            application/json:
+              examples:
+                invalid_pagination:
+                  value:
+                    errors:
+                    - code: invalid_pagination
+                      message: limit must be at least 1
+                      field: limit
+                  summary: A negative limit
+              schema:
+                "$ref": "#/components/schemas/errors"
+    post:
+      summary: Adds a book
+      tags:
+      - Books
+      parameters: []
+      responses:
+        '201':
+          description: book created
+          content:
+            application/json:
+              examples:
+                created:
+                  value:
+                    serial_number: '004219'
+                    title: The Pragmatic Programmer
+                    authors:
+                    - Andrew Hunt
+                    - David Thomas
+                    status: available
+                    author: Andrew Hunt, David Thomas
+                    borrowed: false
+                    current_loan:
+                  summary: The new book, available
+                created_one_author:
+                  value:
+                    serial_number: '004220'
+                    title: Practical Object-Oriented Design
+                    author: Sandi Metz
+                    status: available
+                    authors:
+                    - Sandi Metz
+                    borrowed: false
+                    current_loan:
+                  summary: A new book with one author
+              schema:
+                "$ref": "#/components/schemas/book"
+        '400':
+          description: the body is not valid JSON
+          content:
+            application/json:
+              examples:
+                invalid_json:
+                  value:
+                    errors:
+                    - code: invalid_json
+                      message: Request body is not valid JSON
+                      field:
+                  summary: A body that does not parse
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '422':
+          description: invalid input
+          content:
+            application/json:
+              examples:
+                invalid_fields:
+                  value:
+                    errors:
+                    - code: invalid
+                      message: Serial number must be a 6-digit number
+                      field: serial_number
+                    - code: blank
+                      message: Title can't be blank
+                      field: title
+                  summary: Bad serial number and blank title
+                taken:
+                  value:
+                    errors:
+                    - code: taken
+                      message: Serial number has already been taken
+                      field: serial_number
+                  summary: A serial number another book uses
+                ambiguous_authors:
+                  value:
+                    errors:
+                    - code: ambiguous_authors
+                      message: Send either author or authors, not both
+                      field: authors
+                  summary: Both author and authors in one request
+              schema:
+                "$ref": "#/components/schemas/errors"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - serial_number
+              - title
+              properties:
+                serial_number:
+                  type: string
+                  pattern: "^\\d{6}$"
+                  description: Six digits, leading zeros included
+                  example: '004219'
+                title:
+                  type: string
+                  example: The Pragmatic Programmer
+                author:
+                  type: string
+                  description: One author. Send this or authors, not both
+                  example: Sandi Metz
+                authors:
+                  type: array
+                  items:
+                    type: string
+                  description: Authors in display order
+                  example:
+                  - Andrew Hunt
+                  - David Thomas
+            examples:
+              two_authors:
+                summary: Two authors, in display order
+                value:
+                  serial_number: '004219'
+                  title: The Pragmatic Programmer
+                  authors:
+                  - Andrew Hunt
+                  - David Thomas
+              one_author:
+                summary: One author
+                value:
+                  serial_number: '004220'
+                  title: Practical Object-Oriented Design
+                  author: Sandi Metz
+        required: true
+  "/api/v1/books/{serial_number}":
+    get:
+      summary: Shows a book with its full borrowing history
+      tags:
+      - Books
+      parameters:
+      - name: serial_number
+        in: path
+        description: Six-digit serial number
+        example: '000101'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: book found
+          content:
+            application/json:
+              examples:
+                book:
+                  value:
+                    serial_number: '000101'
+                    title: Oryx and Crake
+                    status: available
+                    author: Margaret Atwood
+                    authors:
+                    - Margaret Atwood
+                    borrowed: false
+                    current_loan:
+                    loans:
+                    - borrowed_at: '2026-09-01T10:00:00.000+02:00'
+                      due_date: '2026-10-01'
+                      returned_at: '2026-09-20T15:30:00.000+02:00'
+                      reader:
+                        card_number: '100002'
+                        full_name: Anna Nowak
+                        email: anna.nowak@example.com
+                  summary: A book with one returned loan
+              schema:
+                "$ref": "#/components/schemas/book_with_history"
+        '404':
+          description: no book with that serial number
+          content:
+            application/json:
+              examples:
+                not_found:
+                  value:
+                    errors:
+                    - code: not_found
+                      message: Book not found
+                      field:
+                  summary: An unknown serial number
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '422':
+          description: invalid input
+          content:
+            application/json:
+              examples:
+                invalid_characters:
+                  value:
+                    errors:
+                    - code: invalid_characters
+                      message: Parameters must not contain null bytes
+                      field:
+                  summary: A null byte in the serial number
+              schema:
+                "$ref": "#/components/schemas/errors"
+    delete:
+      summary: Deletes a book and its returned loans
+      tags:
+      - Books
+      parameters:
+      - name: serial_number
+        in: path
+        description: Six-digit serial number
+        example: '000103'
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: book deleted
+        '404':
+          description: no book with that serial number
+          content:
+            application/json:
+              examples:
+                not_found:
+                  value:
+                    errors:
+                    - code: not_found
+                      message: Book not found
+                      field:
+                  summary: An unknown serial number
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '409':
+          description: book is currently borrowed
+          content:
+            application/json:
+              examples:
+                already_borrowed:
+                  value:
+                    errors:
+                    - code: already_borrowed
+                      message: Book is already borrowed
+                      field:
+                  summary: Serial number 000102 is on loan
+              schema:
+                "$ref": "#/components/schemas/errors"
+        '422':
+          description: invalid input
+          content:
+            application/json:
+              examples:
+                invalid_characters:
+                  value:
+                    errors:
+                    - code: invalid_characters
+                      message: Parameters must not contain null bytes
+                      field:
+                  summary: A null byte in the serial number
+              schema:
+                "$ref": "#/components/schemas/errors"
+components:
+  schemas:
+    reader:
+      type: object
+      required:
+      - card_number
+      - full_name
+      - email
+      properties:
+        card_number:
+          type: string
+          pattern: "^\\d{6}$"
+          description: Six digits, leading zeros included
+          example: '100002'
+        full_name:
+          type: string
+          example: Anna Nowak
+        email:
+          type: string
+          format: email
+          example: anna.nowak@example.com
+    loan:
+      type: object
+      required:
+      - borrowed_at
+      - due_date
+      - returned_at
+      - reader
+      properties:
+        borrowed_at:
+          type: string
+          format: date-time
+          example: '2026-09-01T10:00:00.000+02:00'
+        due_date:
+          type: string
+          format: date
+          description: 30 days after the borrow date
+          example: '2026-10-01'
+        returned_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Null while the loan is open
+          example: '2026-09-20T15:30:00.000+02:00'
+        reader:
+          "$ref": "#/components/schemas/reader"
+    book:
+      type: object
+      required:
+      - serial_number
+      - title
+      - status
+      - author
+      - authors
+      - borrowed
+      - current_loan
+      properties:
+        serial_number:
+          type: string
+          pattern: "^\\d{6}$"
+          description: Six digits, leading zeros included
+          example: '000102'
+        title:
+          type: string
+          example: Good Omens
+        status:
+          type: string
+          enum:
+          - available
+          - borrowed
+          example: borrowed
+        author:
+          type: string
+          description: All authors joined with a comma
+          example: Terry Pratchett, Neil Gaiman
+        authors:
+          type: array
+          items:
+            type: string
+          description: Authors in display order
+          example:
+          - Terry Pratchett
+          - Neil Gaiman
+        borrowed:
+          type: boolean
+          example: true
+        current_loan:
+          type: object
+          required:
+          - borrowed_at
+          - due_date
+          - returned_at
+          - reader
+          properties:
+            borrowed_at:
+              type: string
+              format: date-time
+              example: '2026-09-01T10:00:00.000+02:00'
+            due_date:
+              type: string
+              format: date
+              description: 30 days after the borrow date
+              example: '2026-10-01'
+            returned_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: Null while the loan is open
+              example: '2026-09-20T15:30:00.000+02:00'
+            reader:
+              "$ref": "#/components/schemas/reader"
+          nullable: true
+    book_with_history:
+      type: object
+      required:
+      - serial_number
+      - title
+      - status
+      - author
+      - authors
+      - borrowed
+      - current_loan
+      - loans
+      properties:
+        serial_number:
+          type: string
+          pattern: "^\\d{6}$"
+          description: Six digits, leading zeros included
+          example: '000102'
+        title:
+          type: string
+          example: Good Omens
+        status:
+          type: string
+          enum:
+          - available
+          - borrowed
+          example: borrowed
+        author:
+          type: string
+          description: All authors joined with a comma
+          example: Terry Pratchett, Neil Gaiman
+        authors:
+          type: array
+          items:
+            type: string
+          description: Authors in display order
+          example:
+          - Terry Pratchett
+          - Neil Gaiman
+        borrowed:
+          type: boolean
+          example: true
+        current_loan:
+          type: object
+          required:
+          - borrowed_at
+          - due_date
+          - returned_at
+          - reader
+          properties:
+            borrowed_at:
+              type: string
+              format: date-time
+              example: '2026-09-01T10:00:00.000+02:00'
+            due_date:
+              type: string
+              format: date
+              description: 30 days after the borrow date
+              example: '2026-10-01'
+            returned_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: Null while the loan is open
+              example: '2026-09-20T15:30:00.000+02:00'
+            reader:
+              "$ref": "#/components/schemas/reader"
+          nullable: true
+        loans:
+          type: array
+          items:
+            "$ref": "#/components/schemas/loan"
+    pagination:
+      type: object
+      required:
+      - count
+      - page
+      - limit
+      - last
+      properties:
+        count:
+          type: integer
+          description: Books across all pages
+          example: 3
+        page:
+          type: integer
+          example: 2
+        limit:
+          type: integer
+          example: 1
+        last:
+          type: integer
+          description: Number of the last page
+          example: 3
+        previous:
+          type: integer
+          description: Left out on the first page
+          example: 1
+        next:
+          type: integer
+          description: Left out on the last page
+          example: 3
+    errors:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            required:
+            - code
+            - message
+            - field
+            properties:
+              code:
+                type: string
+                example: unknown_reader
+              message:
+                type: string
+                example: No reader has that card number
+              field:
+                type: string
+                nullable: true
+                description: Null when the error is not about one field
+                example: card_number
+servers:
+- url: http://localhost:3000

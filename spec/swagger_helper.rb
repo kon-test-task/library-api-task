@@ -1,26 +1,27 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative 'support/openapi_examples'
 
 RSpec.configure do |config|
   loan_schema = {
     type: :object,
     required: %w[borrowed_at due_date returned_at reader],
     properties: {
-      borrowed_at: { type: :string, format: 'date-time' },
-      due_date: { type: :string, format: :date },
-      returned_at: { type: :string, format: 'date-time', nullable: true },
+      borrowed_at: { type: :string, format: 'date-time', example: OpenapiExamples::RETURNED_LOAN[:borrowed_at] },
+      due_date: { type: :string, format: :date, description: '30 days after the borrow date', example: OpenapiExamples::RETURNED_LOAN[:due_date] },
+      returned_at: { type: :string, format: 'date-time', nullable: true, description: 'Null while the loan is open', example: OpenapiExamples::RETURNED_LOAN[:returned_at] },
       reader: { '$ref' => '#/components/schemas/reader' }
     }
   }
 
   book_properties = {
-    serial_number: { type: :string },
-    title: { type: :string },
-    status: { type: :string, enum: %w[available borrowed] },
-    author: { type: :string },
-    authors: { type: :array, items: { type: :string } },
-    borrowed: { type: :boolean },
+    serial_number: { type: :string, pattern: OpenapiExamples::SIX_DIGITS, description: 'Six digits, leading zeros included', example: OpenapiExamples::BORROWED_BOOK[:serial_number] },
+    title: { type: :string, example: OpenapiExamples::BORROWED_BOOK[:title] },
+    status: { type: :string, enum: %w[available borrowed], example: OpenapiExamples::BORROWED_BOOK[:status] },
+    author: { type: :string, description: 'All authors joined with a comma', example: OpenapiExamples::BORROWED_BOOK[:author] },
+    authors: { type: :array, items: { type: :string }, description: 'Authors in display order', example: OpenapiExamples::BORROWED_BOOK[:authors] },
+    borrowed: { type: :boolean, example: OpenapiExamples::BORROWED_BOOK[:borrowed] },
     current_loan: loan_schema.merge(nullable: true)
   }
 
@@ -39,7 +40,8 @@ RSpec.configure do |config|
     'v1/swagger.yaml' => {
       openapi: '3.0.1',
       info: {
-        title: 'API V1',
+        title: 'Library API',
+        description: 'Library staff use this API to track books, readers and loans.',
         version: 'v1'
       },
       paths: {},
@@ -49,9 +51,9 @@ RSpec.configure do |config|
             type: :object,
             required: %w[card_number full_name email],
             properties: {
-              card_number: { type: :string },
-              full_name: { type: :string },
-              email: { type: :string }
+              card_number: { type: :string, pattern: OpenapiExamples::SIX_DIGITS, description: 'Six digits, leading zeros included', example: OpenapiExamples::ANNA[:card_number] },
+              full_name: { type: :string, example: OpenapiExamples::ANNA[:full_name] },
+              email: { type: :string, format: :email, example: OpenapiExamples::ANNA[:email] }
             }
           },
           loan: loan_schema,
@@ -69,12 +71,12 @@ RSpec.configure do |config|
             type: :object,
             required: %w[count page limit last],
             properties: {
-              count: { type: :integer },
-              page: { type: :integer },
-              limit: { type: :integer },
-              last: { type: :integer },
-              previous: { type: :integer },
-              next: { type: :integer }
+              count: { type: :integer, description: 'Books across all pages', example: OpenapiExamples::SECOND_PAGE_META[:count] },
+              page: { type: :integer, example: OpenapiExamples::SECOND_PAGE_META[:page] },
+              limit: { type: :integer, example: OpenapiExamples::SECOND_PAGE_META[:limit] },
+              last: { type: :integer, description: 'Number of the last page', example: OpenapiExamples::SECOND_PAGE_META[:last] },
+              previous: { type: :integer, description: 'Left out on the first page', example: OpenapiExamples::SECOND_PAGE_META[:previous] },
+              next: { type: :integer, description: 'Left out on the last page', example: OpenapiExamples::SECOND_PAGE_META[:next] }
             }
           },
           errors: {
@@ -87,9 +89,9 @@ RSpec.configure do |config|
                   type: :object,
                   required: %w[code message field],
                   properties: {
-                    code: { type: :string },
-                    message: { type: :string },
-                    field: { type: :string, nullable: true }
+                    code: { type: :string, example: OpenapiExamples::UNKNOWN_READER_ERROR[:code] },
+                    message: { type: :string, example: OpenapiExamples::UNKNOWN_READER_ERROR[:message] },
+                    field: { type: :string, nullable: true, description: 'Null when the error is not about one field', example: OpenapiExamples::UNKNOWN_READER_ERROR[:field] }
                   }
                 }
               }
@@ -99,12 +101,7 @@ RSpec.configure do |config|
       },
       servers: [
         {
-          url: 'https://{defaultHost}',
-          variables: {
-            defaultHost: {
-              default: 'www.example.com'
-            }
-          }
+          url: 'http://localhost:3000'
         }
       ]
     }
