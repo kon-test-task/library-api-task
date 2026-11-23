@@ -17,7 +17,7 @@ gem "strong_migrations", "~> 2.8"
 # JSON views for the API
 gem "blueprinter", "~> 1.2"
 # Offset pagination for the book list
-gem "pagy", "~> 43.0"
+gem "pagy", "~> 43.8"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
